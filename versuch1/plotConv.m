@@ -17,48 +17,67 @@
 nmax = 100;
 L = 1;
 kxind = 1;
+kxAna = pi/L;
 nOrd2 = 3:nmax;
 nOrd4 = 5:nmax;
+dx = L/(n-1);
 
 
 % Konvergenzstudie für Ordnung 2 und keine Randbedingung
 disp('Konvergenzstudie für Ordnung 2 und keine Randbedingung')
 kxOrd2bc0 = zeros(length(nOrd2),1);
+errOrd2bc0 = zeros(length(nOrd2),1);
 for i=1:length(nOrd2)
   n = nOrd2(i);
-
-end;
+  kx = solveCC(createCC(n, 2, 0), dx);
+  kxOrd2bc0(i) = kx(kxind);
+  errOrd2bc0(i) = abs(kxAna - kx(kxind))/kxAna;
+end
 
 % Konvergenzstudie für Ordnung 4 und keine Randbedingung
 disp('Konvergenzstudie für Ordnung 4 und keine Randbedingung')
 kxOrd4bc0 = zeros(length(nOrd4),1);
+errOrd4bc0 = zeros(length(nOrd4),1);
 for i=1:length(nOrd4)
   n = nOrd4(i);
-
-end;
+  kx = solveCC(createCC(n, 4, 0), dx);
+  kxOrd4bc0(i) = kx(kxind);
+  errOrd4bc0(i) = abs(kxAna - kx(kxind))/kxAna;
+end
 
 % Konvergenzstudie für Ordnung 2 und elektrische Randbedingung
 disp('Konvergenzstudie für Ordnung 2 und elektrische Randbedingung')
 kxOrd2bc1 = zeros(length(nOrd2),1);
+errOrd2bc1 = zeros(length(nOrd2),1);
 for i=1:length(nOrd2)
   n = nOrd2(i);
-
-end;
+  kx = solveCC(createCC(n, 2, 1), dx);
+  kxOrd2bc1(i) = kx(kxind);
+  errOrd2bc1(i) = abs(kxAna - kx(kxind))/kxAna;
+end
 
 % Konvergenzstudie für Ordnung 4 und elektrische Randbedingung
 disp('Konvergenzstudie für Ordnung 4 und elektrische Randbedingung')
 kxOrd4bc1 = zeros(length(nOrd4),1);
+errOrd4bc1 = zeros(length(nOrd4),1);
 for i=1:length(nOrd4)
   n = nOrd4(i);
-
-end;
+  kx = solveCC(createCC(n, 4, 1), dx);
+  kxOrd4bc1(i) = kx(kxind);
+  errOrd4bc1(i) = abs(kxAna - kx(kxind))/kxAna;
+end
 
 
 % Formel für analytische Lösung
-% kxAna = 
+% kxAna = m*pi/L mit m=1
 
 % Plot für die Wellenzahl über Stützstellenanzahl
 figure(1)
+
+hold all
+yline(kxAna);
+plot(nOrd2, kxOrd2bc0, nOrd4, kxOrd4bc0, nOrd2, kxOrd2bc1, nOrd4, kxOrd4bc1);
+hold off
 
 legend({'analytische Wellenzahl',...
         'zweite Ordnung ohne Randbed.','vierte Ordnung ohne Randbed.',...
@@ -73,6 +92,8 @@ print -dpdf plotConv.pdf
 
 % Plot für den relativen Wellenzahlfehler über Gitterschrittweite (loglog)
 figure(2)
+
+loglog(nOrd2, errOrd2bc0, nOrd4, errOrd4bc0, nOrd2, errOrd2bc1, nOrd4, errOrd4bc1)
 
 legend({'zweite Ordnung ohne Randbed.','vierte Ordnung ohne Randbed.',...
         'zweite Ordnung mit Randbed.','vierte Ordnung mit Randbed.'
