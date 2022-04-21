@@ -1,5 +1,4 @@
-# vaf-sopra
-https://moodle.tu-darmstadt.de/course/view.php?id=29928
+# [vaf-sopra](https://moodle.tu-darmstadt.de/course/view.php?id=29928)
 
 Das Softwarepraktikum Verfahren und Anwendungen der Feldsimulation ist eine Ergänzung zu der jeweils im gleichen
 Semester stattfindenden Vorlesung mit dem gleichen Titel. Es dient der Vertiefung der dort vorgestellten Lehrinhalte,
