@@ -10,7 +10,7 @@ L=1;
 cc = createCC(n, ord, bc);
 
 % Gitterschrittweite bestimmen
-dx = L/n;
+dx = L/(n-1);
 
 % Lösen der Eigenwertgleichung mit solveCC
 [kx, modes] = solveCC(cc, dx);
