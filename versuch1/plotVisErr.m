@@ -10,25 +10,42 @@
 % Parameter setzen
 nmax=1000;
 
+
 % Vektor mit verschiedener Anzahl von Dreicken
 nd=3:nmax;
 
+
 % Berechnung von diskreter Oberfläche und Volumen 
-% oberflaecheDiskrete =
-% volumenDiskrete =
+oberflaechendiskret = zeros(1,nmax-2);
+[~,imax] = size(nd);
+for i= 1:imax
+    
+    n = nd(1,i);
+    oberflaechendiskret(1,i) = 2*n*sin(2*pi/n);
+    
+end
+
+
+volumendiskret = zeros(1,nmax-2);
+for i= 1:imax
+    
+    n = nd(1,i);
+    volumendiskret(1,i) = n/2*sin(2*pi/n);
+    
+end
 
 % Berechnung von analytischer Oberfläche und Volumen 
-% oberflaecheAnalytisch =
-% volumenAnalytisch =
+oberflaecheanalytisch = 4*pi;
+volumenanalytisch = pi;
 
 % Berechnung von Oberflächen- und Volumenfehler
-% oberflaechenFehler =
-% volumenFehler =
+oberflaechenfehler = ones(1,nmax-2) - oberflaechendiskret ./ oberflaecheanalytisch;
+volumenfehler = ones(1,nmax-2) - volumendiskret ./ volumenanalytisch;
 
 
 % Plotten der beiden Fehler über nd
 figure(1)
-    loglog(nd,oberflaechenFehler,nd,volumenFehler)
+    loglog(nd,oberflaechenfehler,nd,volumenfehler)
     xlabel('Anzahl Dreiecke Deckelfläche')
     ylabel('relativer Fehler')
     legend({'Oberflächenfehler',...
@@ -40,3 +57,20 @@ figure(1)
     
     
 % nd für Fehler kleiner als 10^(-5) finden
+oberflaechenfehler_suche = 1;
+volumenfehler_suche = 1;
+n = 3;
+
+while oberflaechenfehler_suche >= power(10,-5) && volumenfehler_suche >= power(10,-5)
+    
+    oberflaechediskret_suche = 2*n*sin(2*pi/n);
+    oberflaechenfehler_suche = 1-oberflaechediskret_suche/oberflaecheanalytisch;
+    
+    volumendiskret_suche = n/2*sin(2*pi/n);
+    volumenfehler_suche = 1-volumendiskret_suche/volumenanalytisch;
+    
+    n = n+1;
+    
+end
+
+disp(n-1)
