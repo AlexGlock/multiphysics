@@ -20,8 +20,6 @@ kxind = 1;
 kxAna = pi/L;
 nOrd2 = 3:nmax;
 nOrd4 = 5:nmax;
-dx = L/(n-1);
-
 
 % Konvergenzstudie für Ordnung 2 und keine Randbedingung
 disp('Konvergenzstudie für Ordnung 2 und keine Randbedingung')
@@ -29,6 +27,7 @@ kxOrd2bc0 = zeros(length(nOrd2),1);
 errOrd2bc0 = zeros(length(nOrd2),1);
 for i=1:length(nOrd2)
   n = nOrd2(i);
+  dx = L/(n-1);
   kx = solveCC(createCC(n, 2, 0), dx);
   kxOrd2bc0(i) = kx(kxind);
   errOrd2bc0(i) = abs(kxAna - kx(kxind))/kxAna;
@@ -40,6 +39,7 @@ kxOrd4bc0 = zeros(length(nOrd4),1);
 errOrd4bc0 = zeros(length(nOrd4),1);
 for i=1:length(nOrd4)
   n = nOrd4(i);
+  dx = L/(n-1);
   kx = solveCC(createCC(n, 4, 0), dx);
   kxOrd4bc0(i) = kx(kxind);
   errOrd4bc0(i) = abs(kxAna - kx(kxind))/kxAna;
@@ -51,6 +51,7 @@ kxOrd2bc1 = zeros(length(nOrd2),1);
 errOrd2bc1 = zeros(length(nOrd2),1);
 for i=1:length(nOrd2)
   n = nOrd2(i);
+  dx = L/(n-1);
   kx = solveCC(createCC(n, 2, 1), dx);
   kxOrd2bc1(i) = kx(kxind);
   errOrd2bc1(i) = abs(kxAna - kx(kxind))/kxAna;
@@ -62,6 +63,7 @@ kxOrd4bc1 = zeros(length(nOrd4),1);
 errOrd4bc1 = zeros(length(nOrd4),1);
 for i=1:length(nOrd4)
   n = nOrd4(i);
+  dx = L/(n-1);
   kx = solveCC(createCC(n, 4, 1), dx);
   kxOrd4bc1(i) = kx(kxind);
   errOrd4bc1(i) = abs(kxAna - kx(kxind))/kxAna;
