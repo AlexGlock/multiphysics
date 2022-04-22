@@ -22,5 +22,6 @@ function [kx, modes]=solveCC(cc, dx)
     [kx, i] = sort(kx);
     
     % Sortieren der Eigenvektoren mithilfe des Sortierindexes und damit
+    % Bestimmung der Moden.
     modes = V(:,i);
 end
