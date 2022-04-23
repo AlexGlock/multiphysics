@@ -49,7 +49,7 @@ function [cc]=createCC(n, ord, bc)
     elseif ord==4
 
         % Bestimmen der cc Matrix für Ordnung 4 ohne Randbedingungen
-        diff = [-1,16,-30,16,-1];
+        diff = [-1,16,-30,16,-1] ./ 12;
         i = 1;
         while i <= n
             cc(i,i:i+ord) = diff(1,:);
