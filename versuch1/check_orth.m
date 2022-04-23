@@ -24,3 +24,7 @@ for i = 1:n
 end
 
 imagesc(A);
+colorbar
+set(1,'papersize',[12,9])
+set(1,'paperposition',[0,0,12,9])
+print -dpdf orth.pdf
