@@ -11,7 +11,7 @@ axis equal;
 
 
 % Read car.stl
-[xdata_car,ydata_car,zdata_car, stlname_car] = READ_STL('car.stl');
+[xdata_car,ydata_car,zdata_car, stlname_car] = READ_STL('w210.stl');
 
 % Visualize car: 
 figure_car = figure(2);
