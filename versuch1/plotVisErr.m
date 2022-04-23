@@ -9,6 +9,8 @@
 
 % Parameter setzen
 nmax=1000;
+r = 1;
+h = 1;
 
 
 % Vektor mit verschiedener Anzahl von Dreicken
@@ -21,7 +23,7 @@ oberflaechendiskret = zeros(1,nmax-2);
 for i= 1:imax
     
     n = nd(1,i);
-    oberflaechendiskret(1,i) = 2*n*sin(2*pi/n);
+    oberflaechendiskret(1,i) = n*(r^2 * sin(2*pi/n) + 2*h*r*sin(pi/n));
     
 end
 
@@ -30,17 +32,17 @@ volumendiskret = zeros(1,nmax-2);
 for i= 1:imax
     
     n = nd(1,i);
-    volumendiskret(1,i) = n/2*sin(2*pi/n);
+    volumendiskret(1,i) = n/2*h*r^2*sin(2*pi/n);
     
 end
 
 % Berechnung von analytischer Oberfläche und Volumen 
-oberflaecheanalytisch = 4*pi;
-volumenanalytisch = pi;
+oberflaecheanalytisch = 2*pi*r^2 + 2*pi*r*h;
+volumenanalytisch = pi*r^2*h;
 
 % Berechnung von Oberflächen- und Volumenfehler
-oberflaechenfehler = ones(1,nmax-2) - oberflaechendiskret ./ oberflaecheanalytisch;
-volumenfehler = ones(1,nmax-2) - volumendiskret ./ volumenanalytisch;
+oberflaechenfehler = abs(ones(1,nmax-2) - oberflaechendiskret ./ oberflaecheanalytisch);
+volumenfehler = abs(ones(1,nmax-2) - volumendiskret ./ volumenanalytisch);
 
 
 % Plotten der beiden Fehler über nd
@@ -61,13 +63,13 @@ oberflaechenfehler_suche = 1;
 volumenfehler_suche = 1;
 n = 3;
 
-while oberflaechenfehler_suche >= power(10,-5) && volumenfehler_suche >= power(10,-5)
+while oberflaechenfehler_suche >= power(10,-5) || volumenfehler_suche >= power(10,-5)
     
-    oberflaechediskret_suche = 2*n*sin(2*pi/n);
-    oberflaechenfehler_suche = 1-oberflaechediskret_suche/oberflaecheanalytisch;
+    oberflaechediskret_suche = n*(r^2 * sin(2*pi/n) + 2*h*r*sin(pi/n));
+    oberflaechenfehler_suche = abs(1-oberflaechediskret_suche/oberflaecheanalytisch);
     
-    volumendiskret_suche = n/2*sin(2*pi/n);
-    volumenfehler_suche = 1-volumendiskret_suche/volumenanalytisch;
+    volumendiskret_suche = n/2*h*r^2*sin(2*pi/n);
+    volumenfehler_suche = abs(1-volumendiskret_suche/volumenanalytisch);
     
     n = n+1;
     
