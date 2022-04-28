@@ -40,9 +40,9 @@ function [ mesh ] = cartMesh( xmesh, ymesh, zmesh )
     np = nx*ny*nz;
 
 
-    Mx = xmesh(:,2:nx) - xmesh(:,1:nx-1);
-    My = ymesh(:,2:ny) - ymesh(:,1:ny-1);
-    Mz = zmesh(:,2:nz) - zmesh(:,1:nz-1);
+    Mx = 1;
+    My = nx;
+    Mz = nx*ny;
 
 
 % Zuweisen der Bestandteile zum struct msh
