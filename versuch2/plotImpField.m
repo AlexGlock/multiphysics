@@ -6,9 +6,9 @@
 
 %% Aufgabe 9
 % Beispielgitter erzeugen (3D)
-xmesh = 1:10;
-ymesh = 1:10;
-zmesh = 1:10;
+xmesh = 0:2:10;
+ymesh = 0:2:10;
+zmesh = 0:2:10;
 
 %% msh struct berechnen
 msh = cartMesh(xmesh, ymesh, zmesh);

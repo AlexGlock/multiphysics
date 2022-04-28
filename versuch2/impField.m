@@ -35,33 +35,38 @@ for i=1:nx
             % kanonischen Index n bestimmen
             n = 1 + (i-1)*Mx + (j-1)*My + (k-1)*Mz;
             
-            % Abbrechen, falls Kante eine Geisterkante ist
-            if (edg(n) == 0)
-                continue
-            end
-            
             % x-, y- und z-Koordinate des Gitterpunktes bestimmen
             x = xmesh(i);
             y = ymesh(j);
             z = zmesh(k);
-            % Kantenmittelpunkte bestimmen
-            xm = (x + xmesh(i+1))/2;
-            ym = (y + ymesh(j+1))/2;
-            zm = (z + zmesh(k+1))/2;
-            % Kantenlaengen bestimmen
-            xl = xmesh(i+1) - x;
-            yl = ymesh(i+1) - y;
-            zl = zmesh(i+1) - z;
 
             % Bogenwert fuer x-Kante mit Index n
-            fx = field(xm,y,z);
-            fieldBow(n) = fx(1) * xl;
+            if (edg(n) == 1)
+                xend = xmesh(i+1);
+                xm = (x + xend)/2;
+                xl = xend - x;
+                
+                fx = field(xm,y,z);
+                fieldBow(n) = fx(1) * xl;
+            end
             % Bogenwert fuer y-Kante mit Index n
-            fy = field(x,ym,z);
-            fieldBow(n + np) = fy(2) * yl;
+            if (edg(n + np) == 1)
+                yend = ymesh(j+1);
+                ym = (y + yend)/2;
+                yl = yend - y;
+                
+                fy = field(x,ym,z);
+                fieldBow(n + np) = fy(2) * yl;
+            end
             % Bogenwert fuer z-Kante mit Index n
-            fz = field(x,y,zm);
-            fieldBow(n + 2*np) = fz(3) * zl;
+            if (edg(n + 2*np) == 1)
+                zend = zmesh(k+1);
+                zm = (z + zend)/2;
+                zl = zend - z;
+                
+                fz = field(x,y,zm);
+                fieldBow(n + 2*np) = fz(3) * zl;
+            end
         end
     end
 end
