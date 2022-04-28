@@ -34,7 +34,9 @@ for i=1:nx
         for k=1:nz
             % kanonischen Index n bestimmen
             n = 1 + (i-1)*Mx + (j-1)*My + (k-1)*Mz;
-            if (any(edg==n))
+            
+            % Abbrechen, falls Kante eine Geisterkante ist
+            if (edg(n) == 0)
                 continue
             end
             
