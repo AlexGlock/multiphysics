@@ -30,8 +30,37 @@
 
 function [ mesh ] = cartMesh( xmesh, ymesh, zmesh )
 
+
 % Bestimmen von nx, ny, nz und np sowie Mx, My und Mz
+
+    nx = max(size(xmesh));
+    ny = max(size(ymesh));
+    nz = max(size(zmesh));
+
+    np = nx*ny*nz;
+
+
+    Mx = xmesh(2:nx,:) - xmesh(1:nx-1,:);
+    My = ymesh(2:ny,:) - ymesh(1:ny-1,:);
+    Mz = zmesh(2:nz,:) - zmesh(1:nz-1,:);
+
 
 % Zuweisen der Bestandteile zum struct msh
 
+    mesh = struct;
+
+    mesh.xmesh = xmesh;
+    mesh.ymesh = ymesh;
+    mesh.zmesh = zmesh;
+
+    mesh.nx = nx;
+    mesh.ny = ny;
+    mesh.nz = nz;
+    mesh.np = np;
+
+    mesh.Mx = Mx;
+    mesh.My = My;
+    mesh.Mz = Mz;
+
+    
 end
