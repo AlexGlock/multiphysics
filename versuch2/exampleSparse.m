@@ -1,5 +1,7 @@
 %% Beispielgitter definieren (3D)
-xmesh = [1, 3, 5, 7, 9];
+%xmesh = [1, 3, 5, 7, 9];
+%xmesh = [1 3 5];
+xmesh = [1 3 5 7 9 11 13 15 17 19 21 23 25 27 29 31];
 ymesh = xmesh;
 zmesh = ymesh;
 
@@ -31,5 +33,5 @@ title('Visualisierung der C-Matrix des dualen Gitters.');
 [x,y] = size(c);
 storageC = x*y*8;
 storageCsparse = length(find(c ~= 0))*8;
-printf('Speicherplatz fuer volle Matrix C: %d Byte\n',storageC);
-printf('Speicherplatz fuer Matrix C im sparse-Format: %d Byte\n',storageCsparse);
+fprintf('Speicherplatz fuer volle Matrix C: %d Byte\n',storageC);
+fprintf('Speicherplatz fuer Matrix C im sparse-Format: %d Byte\n',storageCsparse);
