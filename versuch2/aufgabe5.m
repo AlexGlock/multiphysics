@@ -1,8 +1,15 @@
 %% Beispielgitter definieren (3D)
+%xmesh = [1 3 5]; % Nd < 50
+xmesh = [1 3 5 7 9 11 13 15 17 19 21 23 25 27 29 31]; %Nd < 5000
+ymesh = xmesh;
+zmesh = ymesh;
 
 % Erzeugen des Gitters
+msh = cartMesh(xmesh, ymesh, zmesh);
 
 % Erzeugen der Matrizen c, s, st und ct
+[c, s, st] = geoMats(msh);
+ct = c';
 
 % Darstellen der Matrizen mit spy.
 figure;
@@ -22,3 +29,8 @@ spy(ct);
 title('Visualisierung der C-Matrix des dualen Gitters.');
 
 % Speicherbedarf in Byte ermitteln
+[x,y] = size(c);
+storageC = x*y*8;
+storageCsparse = length(find(c ~= 0))*8;
+fprintf('Speicherplatz fuer volle Matrix C: %d Byte\n',storageC);
+fprintf('Speicherplatz fuer Matrix C im sparse-Format: %d Byte\n',storageCsparse);
