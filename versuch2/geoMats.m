@@ -19,11 +19,11 @@ Mz = msh.Mz;
 np = msh.np;
 
 % Px Matrix erzeugen
-Px = createP(Mx,np);
+Px = spdiags(ones(np),Mx,-speye(np));
 % Py-Matrix erzeugen
-Py = createP(My,np);
+Py = spdiags(ones(np),My,-speye(np));
 % Pz-Matrix erzeugen
-Pz = createP(Mz,np);
+Pz = spdiags(ones(np),Mz,-speye(np));
 % Matrix derselben Groesse, gefuellt mit Nullen
 Z = sparse(np,np);
 
@@ -33,9 +33,4 @@ c = [Z -Pz Py;
     -Py Px Z];
 s = [Px Py Pz];
 st = [-Px' -Py' -Pz'];
-end
-
-function [P] = createP(M,n)
-    P = -speye(n);
-    P = spdiags(ones(n),M,P);
 end
