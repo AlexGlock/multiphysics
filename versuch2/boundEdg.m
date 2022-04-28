@@ -27,12 +27,12 @@ function [ edg ] = boundEdg( msh )
     % Bitvektor der Groesse 3*np erzeugen
     edg = true(3*np,1);
 
-    n = @(i,j,k) 1 + (i-1)*Mx + (j-1)*My + (k-1)*Mz;
+    n =@(i,j,k) 1 + (i-1)*Mx + (j-1) * My + (k-1)*Mz;
     % Geisterkanten an der rechten YZ-Flaeche auf False setzen
     i = nx;
     for j=1:ny
         for k=1:nz
-            edg(n(i,j,k)) = 0;
+            edg(n(i,j,k),1) = 0;
         end
     end
 
@@ -40,7 +40,7 @@ function [ edg ] = boundEdg( msh )
     j = ny;
     for i=1:nx
         for k=1:nz
-            edg(n(i,j,k) + np) = 0;
+            edg(n(i,j,k)+np,1) = 0;
         end
     end
 
@@ -48,7 +48,7 @@ function [ edg ] = boundEdg( msh )
     k = nz;
     for i=1:nx
         for j=1:ny
-            edg(n(i,j,k) + 2*np) = 0;
+            edg(n(i,j,k)+2*np,1) = 0;
         end
     end
 
