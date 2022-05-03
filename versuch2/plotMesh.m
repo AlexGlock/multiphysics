@@ -5,16 +5,16 @@
 % Eingabe
 % msh           Struktur, wie sie mit cartMesh erzeugt werden kann.
 
-function [  ] = plotMesh(mesh)
+function [  ] = plotMesh(msh)
 
 % Zuweisen von nx, nz, nz, xmesh, ymesh und zmesh
-nx = mesh.nx;
-ny = mesh.ny;
-nz = mesh.nz;
+nx = msh.nx;
+ny = msh.ny;
+nz = msh.nz;
 
-xmesh = mesh.xmesh;
-ymesh = mesh.ymesh;
-zmesh = mesh.zmesh;
+xmesh = msh.xmesh;
+ymesh = msh.ymesh;
+zmesh = msh.zmesh;
 
 % x-Linie
 x_x_line_0 = [xmesh(1,1:nx-1)',xmesh(1,2:nx)'];

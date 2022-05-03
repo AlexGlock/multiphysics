@@ -28,7 +28,7 @@
 %              My = Inkrement in y-Richtung
 %              Mz = Inkrement in z-Richtung
 
-function [ mesh ] = cartMesh( xmesh, ymesh, zmesh )
+function [ msh ] = cartMesh( xmesh, ymesh, zmesh )
 
 
 % Bestimmen von nx, ny, nz und np sowie Mx, My und Mz
@@ -47,20 +47,20 @@ function [ mesh ] = cartMesh( xmesh, ymesh, zmesh )
 
 % Zuweisen der Bestandteile zum struct msh
 
-    mesh = struct;
+    msh = struct;
 
-    mesh.xmesh = xmesh;
-    mesh.ymesh = ymesh;
-    mesh.zmesh = zmesh;
+    msh.xmesh = xmesh;
+    msh.ymesh = ymesh;
+    msh.zmesh = zmesh;
 
-    mesh.nx = nx;
-    mesh.ny = ny;
-    mesh.nz = nz;
-    mesh.np = np;
+    msh.nx = nx;
+    msh.ny = ny;
+    msh.nz = nz;
+    msh.np = np;
 
-    mesh.Mx = Mx;
-    mesh.My = My;
-    mesh.Mz = Mz;
+    msh.Mx = Mx;
+    msh.My = My;
+    msh.Mz = Mz;
 
     
 end
