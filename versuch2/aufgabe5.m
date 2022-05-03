@@ -1,6 +1,6 @@
 %% Beispielgitter definieren (3D)
-%xmesh = [1 3 5]; % Nd < 50
-xmesh = [1 3 5 7 9 11 13 15 17 19 21 23 25 27 29 31]; %Nd < 5000
+%xmesh = [1 2 3]; % Np = 27 < 50
+xmesh = 1:16; %Np = 4096 < 5000
 ymesh = xmesh;
 zmesh = ymesh;
 
@@ -15,10 +15,16 @@ ct = c';
 figure;
 spy(c);
 title('Visualisierung der C-Matrix des primaren Gitters.');
+set(1,'papersize',[9,9])
+set(1,'paperposition',[0,0,9,9])
+print -dpdf curlMatrix.pdf
 
 figure;
 spy(s);
 title('Visualisierung der S-Matrix des primaren Gitters.');
+set(1,'papersize',[12,9])
+set(1,'paperposition',[0,0,12,9])
+print -dpdf divMatrix.pdf
 
 figure;
 spy(st);
