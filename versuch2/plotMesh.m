@@ -47,16 +47,13 @@ for i=1:nx
             z = z_koordinaten(1,k);
             
             % x-Kante zeichnen, falls keine Geisterkante vorliegt
-            plot3(x_x_line_0,y*y_x_line_0,z*z_x_line_0);
-            hold on;
+            line(x_x_line_0,y*y_x_line_0,z*z_x_line_0);
             
             % y-Kante zeichnen, falls keine Geisterkante vorliegt
-            plot3(x*x_y_line_0,y_y_line_0,z*z_y_line_0);
-            hold on;
+            line(x*x_y_line_0,y_y_line_0,z*z_y_line_0);
             
             % z-Kante zeichnen, falls keine Geisterkante vorliegt
-            plot3(x*x_z_line_0,y*y_z_line_0,z_z_line_0);
-            hold on;
+            line(x*x_z_line_0,y*y_z_line_0,z_z_line_0);
             
         end
     end
