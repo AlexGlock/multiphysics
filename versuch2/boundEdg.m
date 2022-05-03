@@ -20,9 +20,9 @@ function [ edg ] = boundEdg( msh )
     nz = msh.nz;
     np = msh.np;
 
-    Mx = mesh.Mx;
-    My = mesh.My;
-    Mz = mesh.Mz;
+    Mx = msh.Mx;
+    My = msh.My;
+    Mz = msh.Mz;
 
     % Bitvektor der Groesse 3*np erzeugen
     edg = true(3*np,1);
