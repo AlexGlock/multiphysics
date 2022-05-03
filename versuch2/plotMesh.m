@@ -59,3 +59,4 @@ for i=1:nx
     end
 end
 xlabel('x');ylabel('y');zlabel('z');
+
