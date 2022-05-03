@@ -8,12 +8,11 @@ for nxy=1:nxyMax
     
     
     % Gittererzeugung: kartesisches Gitter mit nxy Punkten in x- und y-
+    % Richtung. Es handelt sich um ein ebenes Gitter (x-y-Ebene) mit z = 1
     xmesh = 1:1:nxy;
     ymesh = 1:1:nxy;
     zmesh = 1;
     [ msh ] = cartMesh( xmesh, ymesh, zmesh );
-    
-    % Richtung. Es handelt sich um ein ebenes Gitter (x-y-Ebene) mit z = 1
     
     % Geisterkanten finden
     [ edg ] = boundEdg( msh );
@@ -30,9 +29,9 @@ end
 % Darstellen der relativen Anzahl als doppel-logarithmischer Graph
 figure;
 plot(1:nxyMax,relOccurence, 'LineWidth', 2);
-legend('Mit boundEdg ermittelter, relativer Anteil an Geisterkanten');
+legend('Relativer Anteil von Geisterkanten');
 xlabel('N_{xy}');
-ylabel('Rel. Anteil');
+ylabel('Rel. Anzahl n_u');
 title(['Relative Anzahl der Geisterkanten bei N_x bzw. N_y von 1 bis ',...
        num2str(nxyMax)]);
 ylim([min(relOccurence),max(relOccurence)])
