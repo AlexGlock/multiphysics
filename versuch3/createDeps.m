@@ -137,7 +137,22 @@ if bc==1
     for i=1:nx
         for j=1:ny
             for k=1:nz
+                n = 1 + (i-1)*Mx + (j-1)*My + (k-1)*Mz;
 
+                if i==1 || i==nx
+                    meanEpsY(n) = 0;
+                    meanEpsZ(n) = 0;
+                end
+
+                if j==1 || j==ny
+                    meanEpsZ(n) = 0;
+                    meanEpsX(n) = 0;
+                end
+
+                if k==1 || k==nz
+                    meanEpsX(n) = 0;
+                    meanEpsY(n) = 0;
+                end
 
             end
         end
