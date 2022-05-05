@@ -12,3 +12,4 @@ msh = cartMesh(xmesh, ymesh, zmesh);
 
 %% Darstellen des Gitters
 plotMesh(msh);
+view(3);

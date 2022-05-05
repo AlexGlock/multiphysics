@@ -5,16 +5,16 @@
 % Eingabe
 % msh           Struktur, wie sie mit cartMesh erzeugt werden kann.
 
-function [  ] = plotMesh(mesh)
+function [  ] = plotMesh(msh)
 
 % Zuweisen von nx, nz, nz, xmesh, ymesh und zmesh
-nx = mesh.nx;
-ny = mesh.ny;
-nz = mesh.nz;
+nx = msh.nx;
+ny = msh.ny;
+nz = msh.nz;
 
-xmesh = mesh.xmesh;
-ymesh = mesh.ymesh;
-zmesh = mesh.zmesh;
+xmesh = msh.xmesh;
+ymesh = msh.ymesh;
+zmesh = msh.zmesh;
 
 % x-Linie
 x_x_line_0 = [xmesh(1,1:nx-1)',xmesh(1,2:nx)'];
@@ -47,18 +47,16 @@ for i=1:nx
             z = z_koordinaten(1,k);
             
             % x-Kante zeichnen, falls keine Geisterkante vorliegt
-            plot3(x_x_line_0,y*y_x_line_0,z*z_x_line_0);
-            hold on;
+            line(x_x_line_0,y*y_x_line_0,z*z_x_line_0);
             
             % y-Kante zeichnen, falls keine Geisterkante vorliegt
-            plot3(x*x_y_line_0,y_y_line_0,z*z_y_line_0);
-            hold on;
+            line(x*x_y_line_0,y_y_line_0,z*z_y_line_0);
             
             % z-Kante zeichnen, falls keine Geisterkante vorliegt
-            plot3(x*x_z_line_0,y*y_z_line_0,z_z_line_0);
-            hold on;
+            line(x*x_z_line_0,y*y_z_line_0,z_z_line_0);
             
         end
     end
 end
 xlabel('x');ylabel('y');zlabel('z');
+

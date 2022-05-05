@@ -15,3 +15,4 @@ zmesh = [1,2,3,4];
 %% Darstellen des Gitters
 
 plotMesh(mesh);
+view(3);
