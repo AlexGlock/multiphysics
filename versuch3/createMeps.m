@@ -11,6 +11,6 @@
 
 function [ Meps ] = createMeps( DAt, Deps, DS )
 
-% ein Einzeiler :)
+    Meps = DAt * Deps * nullInv(DS);
 
 end
