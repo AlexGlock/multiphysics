@@ -28,3 +28,6 @@ figure;
 plotEdgeVoltage(msh, fbow1);
 figure;
 plotEdgeVoltage(msh, fbow2);
+set(1,'papersize',[9,9])
+set(1,'paperposition',[0,0,9,9])
+print -dpdf fbow2.pdf

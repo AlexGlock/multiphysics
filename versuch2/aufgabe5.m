@@ -1,6 +1,6 @@
 %% Beispielgitter definieren (3D)
-%xmesh = [1 2 3]; % Np = 27 < 50
-xmesh = 1:16; %Np = 4096 < 5000
+xmesh = [1 2 3]; % Np = 27 < 50
+%xmesh = 1:16; %Np = 4096 < 5000
 ymesh = xmesh;
 zmesh = ymesh;
 
