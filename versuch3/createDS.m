@@ -39,7 +39,7 @@ DSdiag = [repmat(dx, 1, ny*nz), ...
 		reshape(repmat(dz, nx*ny, 1), 1, np)];
 
 % aus dem Diagonalvektor für DS die matrix erstellen (Befehl spdiags verwenden)
-DS = spdiags(DSdiag);
+DS = spdiags(DSdiag',0,3*np,3*np);
 
 
 %% Das Gleiche nochmal für die Matrix DSt
@@ -59,6 +59,6 @@ DStdiag = [repmat(dxt, 1, ny*nz), ...
 		reshape(repmat(dzt, nx*ny, 1), 1, np)];
 
 % aus dem Diagonalvektor für DS die matrix erstellen (Befehl spdiags verwenden)
-DSt = spdiags(DStdiag);
+DSt = spdiags(DStdiag',0,3*np,3*np);
 
 end
