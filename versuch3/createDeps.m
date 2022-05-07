@@ -39,12 +39,12 @@ A  = diag(DA);
 
 % Berechnen der Flächen für die Flächen in x-, y- und z-Richtung
 Atx = At(1:np);
-Aty = At(np:2*np);
-Atz = At(2*np:3*np);
+Aty = At(np+1:2*np);
+Atz = At(2*np+1:3*np);
 
 Ax = A(1:np);
-Ay = A(np:2*np);
-Az = A(2*np:3*np);
+Ay = A(np+1:2*np);
+Az = A(2*np+1:3*np);
 
 % Erstellen der Vektoren für die gemittelten epsilon Werte für x-, y- und z-Flächen
 meanEpsX = zeros(np, 1);
