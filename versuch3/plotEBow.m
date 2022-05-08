@@ -34,15 +34,18 @@ for i = 1:nx
        n = 1 + (i-1)*Mx + (j-1)*My + (indz-1)*Mz;
        
        % Bestimmen der Koordinaten des Punktes
-%       X(i,j) = 
-%       Y(i,j) = 
+       X(i,j) = xmesh(i);
+       Y(i,j) = ymesh(j);
        
        % Berechnen des Betrages des elektrischen Feldes
-%       E(i,j) = 
+       E(i,j) = sqrt(eField(n,1).^2+eField(n,2).^2+eField(n,3).^2); 
    end
 end
 
 %% Darstellen des elektrischen Feldes in einem surface plot
-
+surf(X,Y,E);
+xlabel('X-Koordinate');
+ylabel('Y-Koordinate');
+zlabel('Betrag des elektrischen Feldes in V/m');
 
 end

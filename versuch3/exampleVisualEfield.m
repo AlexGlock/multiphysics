@@ -26,12 +26,54 @@ ny = msh.ny;
 nz = msh.nz;
 
 %% Berechnung von dBow
-% ...
+Dfield = @(x,y,z)([x./sqrt(x^2+y^2)^3,y./sqrt(x^2+y^2)^3,z]);
+% Bogenspannungsvektor initieren
+dBow = zeros(3*np,1);
+% Schleife ueber alle Punkte
+for i=1:nx
+    for j=1:ny
+        for k=1:nz
+            % kanonischen Index n bestimmen
+            n = 1 + (i-1)*Mx + (j-1)*My + (k-1)*Mz;
+            % deltas auf primärem Gitter
+            deltaX=DSDiag(n);
+            deltaY=DSDiag(n+np);
+            deltaZ=DSDiag(n+2*np);
+            
+            % x-, y- und z-Koordinate des dualen Gitterpunkts bestimmen
+            x = xmesh(i)+deltaX/2;
+            y = ymesh(j)+deltaY/2;
+            z = zmesh(k)+deltaZ/2;
+
+            if (i == nx)||(i==1)||(j ==ny)||(j==1)||(k==nz)||(k==1) %Ist Randpunkt
+                %Hier müsste wahrscheinlich noch eine Fallunterscheidung
+                %für die unterschiedlichen Ränder rein 
+                dBow(n)=0;
+                dBow(n + np)=0;
+                dBow(n + 2*np)=0;
+
+            else
+                
+                % Bogenwert fuer x-Fläche mit Index n
+                DValue = Dfield(x,y+deltaY/2,z+deltaZ/2);
+                dBow(n) = DAtDiag(n_dual+np)*DValue(1);
+
+                % Bogenwert fuer y-Fläche mit Index n
+                DValue = Dfield(x+deltaX/2,y,z+deltaZ/2);
+                dBow(n + np) = DAtDiag(n+np)*DValue(2);
+                
+                % Bogenwert fuer z-Fläche mit Index n
+                DValue = Dfield(x+deltaX/2,y+deltaY/2,z);
+                dBow(n + 2*np) = DAtDiag(n+2*np)*DValue(3);
+            end
+        end
+    end
+end
 
 %% Isotrope Permittivität
 eps_r = ones(3*np,1);
 
-%bc = ; % PEC
+bc = 1; % PEC
 Deps = createDeps( msh, DA, DAt, eps_r, bc );
 Meps = createMeps( DAt, Deps, DS );
 MepsInv = nullInv( Meps );
@@ -60,7 +102,7 @@ Deps = createDeps( msh, DA, DAt, eps_r, bc );
 Meps = createMeps( DAt, Deps, DS );
 MepsInv = nullInv( Meps );
 
-eBow = MepsInv * dBow;
+eBow = MepsInv * dBow
 
 figure(3);
 plotEBow(msh,eBow,2);
