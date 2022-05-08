@@ -55,15 +55,15 @@ for i=1:nx
             else
                 
                 % Bogenwert fuer x-Fläche mit Index n
-                DValue = Dfield(x,y+deltaY/2,z+deltaZ/2);
-                dBow(n) = DAtDiag(n_dual+np)*DValue(1);
+                DValue = Dfield(x,y-deltaY/2,z-deltaZ/2);
+                dBow(n) = DAtDiag(n+np)*DValue(1);
 
                 % Bogenwert fuer y-Fläche mit Index n
-                DValue = Dfield(x+deltaX/2,y,z+deltaZ/2);
+                DValue = Dfield(x-deltaX/2,y,z-deltaZ/2);
                 dBow(n + np) = DAtDiag(n+np)*DValue(2);
                 
                 % Bogenwert fuer z-Fläche mit Index n
-                DValue = Dfield(x+deltaX/2,y+deltaY/2,z);
+                DValue = Dfield(x-deltaX/2,y-deltaY/2,z);
                 dBow(n + 2*np) = DAtDiag(n+2*np)*DValue(3);
             end
         end
