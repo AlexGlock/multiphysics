@@ -24,6 +24,7 @@ Mz = msh.Mz;
 xmesh = msh.xmesh;
 ymesh = msh.ymesh;
 
+
 %% Berechnung des Betrages des interpolierten elektrischen Gitterflusses
 X = zeros(nx,ny); % x-Koordinaten der Punkte
 Y = zeros(nx,ny); % y-Koordinaten der Punkte
@@ -38,7 +39,7 @@ for i = 1:nx
        Y(i,j) = ymesh(j);
        
        % Berechnen des Betrages des elektrischen Feldes
-       E(i,j) = sqrt(eField(n,1).^2+eField(n,2).^2+eField(n,3).^2); 
+       E(i,j) = norm(eField(n,:)); 
    end
 end
 
