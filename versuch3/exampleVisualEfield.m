@@ -95,14 +95,14 @@ ylabel('y in m');
 
 
 % Folge-Aufgabe: Anisotrope Permittivität
-%eps_r(1:np) =
+eps_r(1:np) = 4*ones(np,1);
 
-%bc = ; % PEC
+bc = 1; % PEC
 Deps = createDeps( msh, DA, DAt, eps_r, bc );
 Meps = createMeps( DAt, Deps, DS );
 MepsInv = nullInv( Meps );
 
-eBow = MepsInv * dBow
+eBow = MepsInv * dBow;
 
 figure(3);
 plotEBow(msh,eBow,2);
