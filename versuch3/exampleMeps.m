@@ -13,7 +13,7 @@ DA = createDA(DS);
 DAt = createDA(DSt);
 
 %% Permittivitäten für jedes Element festlegen
-eps_r = ones(1,msh.np);
+eps_r = ones(msh.np, 1);
 
 %% Berechnen der Meps-Matrix
 bc = 2;

@@ -31,7 +31,12 @@ Mz = msh.Mz;
 
 % Berechnen der Permittivität aus der relativen Permittivität
 eps0 = 8.854187817*10^-12;
-eps = eps_r * eps0; 
+eps = eps_r * eps0;
+
+% Speichern der Permittivität je Raumrichtung
+epsX = eps(1:np);
+epsY = eps(np+1:2*np);
+epsZ = eps(2*np+1:3*np);
 
 % Nur die Diagonale der DA und DAt Matrix ist besetzt, also brauchen wir nur die Diagonale
 At = diag(DAt);
@@ -60,66 +65,66 @@ for i = 1:nx
             n = 1 + (i-1)*Mx + (j-1)*My + (k-1)*Mz;
 
             % eps_x
-            v1x = eps(n) * Ax(n);
+            v1x = epsX(n) * Ax(n);
             v2x = 0;
             v3x = 0;
             v4x = 0;
 
             n2x = n - Mz;
             if n2x > 0
-                v2x = eps(n2x) * Ax(n2x);
+                v2x = epsX(n2x) * Ax(n2x);
             end
 
             n3x = n - My;
             if n3x > 0
-                v3x = eps(n3x) * Ax(n3x);
+                v3x = epsX(n3x) * Ax(n3x);
             end
 
             n4x = n - My - Mz;
             if n4x > 0
-                v4x = eps(n4x) * Ax(n4x);
+                v4x = epsX(n4x) * Ax(n4x);
             end
 
             % eps_y
-            v1y = eps(n) * Ay(n);
+            v1y = epsY(n) * Ay(n);
             v2y = 0;
             v3y = 0;
             v4y = 0;
 
             n2y = n - Mz;
             if n2y > 0
-                v2y = eps(n2y) * Ay(n2y);
+                v2y = epsY(n2y) * Ay(n2y);
             end
 
             n3y = n - Mx;
             if n3y > 0
-                v3y = eps(n3y) * Ay(n3y);
+                v3y = epsY(n3y) * Ay(n3y);
             end
 
             n4y = n - Mx - Mz;
             if n4y > 0
-                v4y = eps(n4y) * Ay(n4y);
+                v4y = epsY(n4y) * Ay(n4y);
             end
 
             % eps_z
-            v1z = eps(n) * Az(n);
+            v1z = epsZ(n) * Az(n);
             v2z = 0;
             v3z = 0;
             v4z = 0;
 
             n2z = n - My;
             if n2z > 0
-                v2z = eps(n2z) * Az(n2z);
+                v2z = epsZ(n2z) * Az(n2z);
             end
 
             n3z = n - Mx;
             if n3z > 0
-                v3z = eps(n3z) * Az(n3z);
+                v3z = epsZ(n3z) * Az(n3z);
             end
 
             n4z = n - Mx - My;
             if n4z > 0
-                v4z = eps(n4z) * Az(n4z);
+                v4z = epsZ(n4z) * Az(n4z);
             end
             
             meanEpsX(n) = (v1x + v2x + v3x + v4x) / (4*Atx(n));
