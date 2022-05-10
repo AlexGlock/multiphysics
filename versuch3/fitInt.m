@@ -36,36 +36,35 @@ eX = zeros(np,1);
 eY = zeros(np,1);
 eZ = zeros(np,1);
 
-%% Verwendung von Meps wieso? eBow schon gegeben ...
-%Meps = createMeps( DAt, Deps, DS );
-%MepsInv = nullInv( Meps );
-
 for k = 1:nz
     for j = 1:ny
         for i = 1:nx
             % Berechnung des kanonischen Index
             n = 1 + (i-1)*Mx + (j-1)*My + (k-1)*Mz;
-            
-            % problem RAND <-> Randbedingungen nicht gegeben Interpolation am Rand wie?
-            % -> momentan ist Kantenwert am rand
-            
+
             %X-Richtung
-            if (i == nx)||(i==1) %Randebene rechts u. links 
-                eX(n)=eEdgeX(n);
+            if i==1 %Randebene links 
+                eX(n)= eEdgeX(n);
+            elseif i==nx %Randebene rechts
+                eX(n) = eEdgeX(n-Mx);
             else
                 eX(n)=(eEdgeX(n-Mx)*DSDiag(n)+eEdgeX(n)*DSDiag(n-Mx))/(DSDiag(n-Mx)+DSDiag(n));
             end
             
             %Y-Richtung
-            if (j ==ny)||(j==1) %Randebene oben und unten 
-                eY(n)=eEdgeY(n);
+            if j==1 %Randebene unten 
+                eY(n) = eEdgeY(n);
+            elseif j==ny %Randebene oben
+                eY(n)=eEdgeY(n-My);
             else
                 eY(n)=(eEdgeY(n-My)*DSDiag(n+np)+eEdgeY(n)*DSDiag(n-My+np))/(DSDiag(n-My+np)+DSDiag(n+np));
             end
             
             %Z-Richtung
-            if (k==nz)||(k==1) %%Randebene hinten und vorne  
+            if k==1 %Randebene vorne  
                 eZ(n)= eEdgeZ(n);
+            elseif k==nz %%Randebene hinten
+                eZ(n) = eEdgeZ(n-Mz);
             else
                 eZ(n)=(eEdgeZ(n-Mz)*DSDiag(n+2*np)+eEdgeZ(n)*DSDiag(n-Mz+2*np))/(DSDiag(n-Mz+2*np)+DSDiag(n+2*np));
             end
