@@ -26,7 +26,7 @@ ny = msh.ny;
 nz = msh.nz;
 
 %% Berechnung von dBow
-Dfield = @(x,y,z)([x/sqrt(x^2+y^2),y/sqrt(x^2+y^2),0]);
+Dfield = @(x,y,z)([x/sqrt(x^2+y^2)^3,y/sqrt(x^2+y^2)^3,0]);
 % Bogenspannungsvektor initieren
 dBow = zeros(3*np,1);
 % Schleife ueber alle Punkte
