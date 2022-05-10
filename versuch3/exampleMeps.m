@@ -16,6 +16,12 @@ DAt = createDA(DSt);
 eps_r = ones(msh.np, 1);
 
 %% Berechnen der Meps-Matrix
-bc = 2;
+bc = 1;
 Deps = createDeps( msh, DA, DAt, eps_r, bc );
 Meps = createMeps( DAt, Deps, DS );
+
+%% Visualisierung der Matrixstruktur
+spy(Meps)
+title('Darstellung der Position aller Einträge in M_{\epsilon}');
+xlabel('Kanonischer Index n');
+ylabel('Kanonischer Index n');
