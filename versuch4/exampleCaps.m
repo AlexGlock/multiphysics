@@ -36,15 +36,20 @@ boxesC(2).value = 2;
 epsC = boxMesher(msh, boxesC, defaultvalue);
 
 % d) vier Boxen mit eps = [1,2,3,4], Reihen und Parallelschaltung
-% boxesD(1)...
-% boxesD(2)...
-% boxesD(3)...
-% boxesD(4)...
-% epsD = boxMesher(msh, boxesD, defaultvalue);
+boxesD(1).box = [1, floor(msh.nx/2), 1, floor(msh.ny/2), 1, msh.nz];
+boxesD(1).value = 1;
+boxesD(2).box = [ceil(msh.nx/2), msh.nx, 1, floor(msh.ny/2), 1, msh.nz];
+boxesD(2).value = 2;
+boxesD(3).box = [1, floor(msh.nx/2), ceil(msh.ny/2), msh.ny, 1, msh.nz];
+boxesD(3).value = 3;
+boxesD(4).box = [ceil(msh.nx/2), msh.nx, ceil(msh.ny/2), msh.ny, 1, msh.nz];
+boxesD(4).value = 4;
+epsD = boxMesher(msh, boxesD, defaultvalue);
 
 % e) eine Box mit eps = 1, metallischer Block wird später über vorgegebene Potentiale eingeprägt
-% boxesE(1)...
-% epsE =  
+boxesE(1).box = [1, msh.nx, 1, msh.ny, 1, msh.nz];
+boxesE(1).value = 1;
+epsE = boxMesher(msh, boxesE, defaultvalue);
 
 
 %% Erzeugen der vorgegebenen Potentiale, jedem primalen Volumen kann 
@@ -59,10 +64,13 @@ boxesPotABCD(2).value = 1;
 potABCD = boxMesher(msh, boxesPotABCD, NaN);
 
 % Variante e) Potentiale im metallischen Block und am Rand
-% boxesPotE(1)...
-% boxesPotE(2)...
-% boxesPotE(3)...
-% potE = boxMesher(msh, boxesPotE, NaN);
+boxesPotE(1).box = [1, floor(msh.nx/2), ceil(msh.ny/2), msh.ny, 1, msh.nz];
+boxesPotE(1).value = 1;
+boxesPotE(2).box = [1, msh.nx, msh.ny, msh.ny, 1, msh.nz];
+boxesPotE(2).value = 1;
+boxesPotE(3).box = [1, msh.nx, 1, 1, 1, msh.nz];
+boxesPotE(3).value = 0;
+potE = boxMesher(msh, boxesPotE, NaN);
 
 
 %% Berechnen der Feldverteilung mit solveES
@@ -76,9 +84,9 @@ q = zeros(msh.np, 1);
 % c) eps = 1, eps = 2, Parallelschaltung
 [ phiC, ebowC, dbowC, relResC] = solveES( msh, epsC, potABCD, q);
 % d) eps = [1,2,3,4], Reihen und Parallelschaltung
-% [ phiD, ebowD, dbowD, relResD] = solveES( msh, epsD, potABCD, q);
+[ phiD, ebowD, dbowD, relResD] = solveES( msh, epsD, potABCD, q);
 % e) eps = 1 mit metallischem Block, Kondensator mit Sprung
-% [ phiE, ebowE, dbowE, relResE] = solveES( msh, epsE, potE, q);
+[ phiE, ebowE, dbowE, relResE] = solveES( msh, epsE, potE, q);
 
 
 %% Kapazitätsberechnung der verschiedenen Kondensatoranordnungen
