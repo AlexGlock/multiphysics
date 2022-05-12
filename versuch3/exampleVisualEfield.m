@@ -26,7 +26,7 @@ ny = msh.ny;
 nz = msh.nz;
 
 %% Berechnung von dBow
-Dfield = @(x,y,z)([x./sqrt(x^2+y^2)^3,y./sqrt(x^2+y^2)^3,z]);
+Dfield = @(x,y,z)([x/sqrt(x^2+y^2)^3,y/sqrt(x^2+y^2)^3,0]);
 % Bogenspannungsvektor initieren
 dBow = zeros(3*np,1);
 % Schleife ueber alle Punkte
@@ -40,32 +40,22 @@ for i=1:nx
             deltaY=DSDiag(n+np);
             deltaZ=DSDiag(n+2*np);
             
-            % x-, y- und z-Koordinate des dualen Gitterpunkts bestimmen
-            x = xmesh(i)+deltaX/2;
-            y = ymesh(j)+deltaY/2;
-            z = zmesh(k)+deltaZ/2;
-
-            if (i == nx)||(i==1)||(j ==ny)||(j==1)||(k==nz)||(k==1) %Ist Randpunkt
-                %Hier müsste wahrscheinlich noch eine Fallunterscheidung
-                %für die unterschiedlichen Ränder rein 
-                dBow(n)=0;
-                dBow(n + np)=0;
-                dBow(n + 2*np)=0;
-
-            else
-                
-                % Bogenwert fuer x-Fläche mit Index n
-                DValue = Dfield(x,y-deltaY/2,z-deltaZ/2);
-                dBow(n) = DAtDiag(n+np)*DValue(1);
-
-                % Bogenwert fuer y-Fläche mit Index n
-                DValue = Dfield(x-deltaX/2,y,z-deltaZ/2);
-                dBow(n + np) = DAtDiag(n+np)*DValue(2);
-                
-                % Bogenwert fuer z-Fläche mit Index n
-                DValue = Dfield(x-deltaX/2,y-deltaY/2,z);
-                dBow(n + 2*np) = DAtDiag(n+2*np)*DValue(3);
-            end
+            % x-, y- und z-Koordinate des primären Gitterpunkts bestimmen
+            x = xmesh(i);
+            y = ymesh(j);
+            z = zmesh(k);
+            
+            % Feldbestimmung bei Schnittpunkt mit dual-Fläche
+            DValueX = Dfield(x+deltaX/2,y,z);
+            DValueY = Dfield(x,y+deltaY/2,z);
+            DValueZ = Dfield(x,y,z+deltaZ/2);
+            
+            % Bogenwert fuer x-Fläche mit Index n
+            dBow(n) = DAtDiag(n)*DValueX(1);
+            % Bogenwert fuer y-Fläche mit Index n
+            dBow(n + np) = DAtDiag(n+np)*DValueY(2);
+            % Bogenwert fuer z-Fläche mit Index n
+            dBow(n + 2*np) = DAtDiag(n+2*np)*DValueZ(3);
         end
     end
 end
@@ -78,7 +68,7 @@ Deps = createDeps( msh, DA, DAt, eps_r, bc );
 Meps = createMeps( DAt, Deps, DS );
 MepsInv = nullInv( Meps );
 
-eBow = MepsInv * dBow;
+eBow = MepsInv*dBow;
 
 figure(1);
 plotEBow(msh,eBow,2);
