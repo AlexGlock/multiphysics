@@ -10,7 +10,14 @@
 %   bbow        Magnetische Gitterfluss
 %   relRes      Relatives Residuum für jeden Iterationsschritt
 
+
+
+
+    
+
 function [hbow, bbow, relRes] = solveMS(msh, mu, jbow)
+
+    bc = [ 0 0 0 0 0 0 ];
 
     % Erzeugung topologische Matrizen
     [~, ~, st] = createTopMats(msh);
@@ -19,16 +26,17 @@ function [hbow, bbow, relRes] = solveMS(msh, mu, jbow)
     [ds, ~, da, dat] = createGeoMats(msh);
 
     % Erzeugung Materialmatrix Permeabilität
-    % Mmu =
+    np = msh.np;
+    Mmu = createMeps(msh, ds, da, dat, mu.*ones(np,1), bc);
 
     % Berechnung Systemmatrix
-    % A =
+    A = st * Mmu * st'; 
 
     % Berechnen des Hilfsfelds mit calcHi
-    % hibow =
+    hibow = calcHi(msh,jbow);
 
     % Ladungsvektor berechnen
-    % qm =
+    qm = st * Mmu * hibow;
 
     % Gleichungssystem lösen (bitte das Minus vor der magnetischen Ladung beachten)
     [phi, ~, ~, ~, resVec] = gmres(A, -qm, 20, 1e-10, msh.np);
@@ -41,8 +49,8 @@ function [hbow, bbow, relRes] = solveMS(msh, mu, jbow)
 
 
     %Magnetische Gitterspannung und Gitterfluss berechnen
-    % hhbow =
-    % hbow  =
-    % bbow  =
+    hhbow = st' * phi;
+    hbow = hhbow + hibow;
+    bbow = Mmu * hbow;
 
 end

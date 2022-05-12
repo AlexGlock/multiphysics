@@ -13,12 +13,15 @@ Mz = msh.Mz;
 np = msh.np;
 
 % Erstellen des Strom-Vektors (kanonischen Index berechnen und benutzen)
-% jbow =
-% ...
+jbow = zeros(1,3*np);
 
+for k = 1:1:max(size(zmesh))
+    n = 1 + 4*Mx + 4*My + (k-1)*Mz + 2*np;
+    jbow(n) = 1000;  
+end
 
 % Berechnen des Hilfsfeldes
-% hiBow = 
+hiBow = calcHi(msh,jbow);
 
 % Plotten des Hilfsfeldes
 figure(1); clf;
