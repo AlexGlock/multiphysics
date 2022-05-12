@@ -17,17 +17,17 @@ function C = calcCap( msh, ebow, dbow )
 % integriert wird, da die Platten in der XZ-Ebene liegen
 
 % Eine Beschreibung der Argumente von intEdge ist in intEdge.m zu finden
-% line.u =
-% line.v =
-% line.w =
-% line.length =
-% line.normal =
+line.u = 1;
+line.v = 1;
+line.w = 1;
+line.length = msh.ny-1;
+line.normal = [0,1,0];
 V = intEdge(msh, ebow, line);
 
 % Elektrische Energie (Statik) [J]
-% We =
+We = 0.5 * dot(ebow, dbow);
 
 % Kapazitaet
-% C =
+C = 2*We/V^2;
 
 end
