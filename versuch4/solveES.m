@@ -21,13 +21,13 @@ function [phi, ebow, dbow, relRes] = solveES(msh, epsilon, pots, q)
     [ds, ~, da, dat] = createGeoMats(msh);
 
     % Erzeugung der Materialmatrix der Permittivität mit createMeps
-    % Meps =
+    Meps = createMeps(msh, ds, da, dat, epsilon);
 
     % Berechnung Systemmatrix
-    % A =
+    A = st*Meps*st';
 
     % Modifikation Systemmatrix und Ladungsvektor mit modPots
-    % [A, q] =
+    [A, q] = modPots(A, q, pots);
 
     % Gleichungssystem lösen mit gmres(20)
     [x, ~, ~, ~, resVec] = gmres(A, q, 20, 1e-13, msh.np);
@@ -40,10 +40,12 @@ function [phi, ebow, dbow, relRes] = solveES(msh, epsilon, pots, q)
                                 % für alle berechnen.
 
     % phi aus x bestimmen (eingeprägte Potentiale wieder einfügen)
-    % phi =
+    idx = isnan(pots);
+    phi = pots;
+    phi(idx) = x;
 
     % Elektrische Gitterspannung und Gitterfluss berechnen
-    % ebow =
-    % dbow =
+    ebow = st'*phi;
+    dbow = Meps*ebow;
 
 end
