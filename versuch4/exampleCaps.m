@@ -108,7 +108,7 @@ fprintf('capE = %e\n',capE);
 
 %% Plotten der elektrischen Felder und Potentialfelder
 % sinnvolle Schnittebene
-% indz = 
+indz = floor(msh.nz/2);
 
 % Potential plotten
 plotPotential(msh, phiE, indz);
