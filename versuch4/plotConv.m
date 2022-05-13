@@ -1,6 +1,6 @@
 %   Aufgabe 5
 %
-%   Erstellt einen Graphen, in dem das relative Residuum über der Anzahl
+%   Erstellt einen Graphen, in dem das relative Residuum ueber der Anzahl
 %   der Iterationen aufgetragen ist.
 
 % Erstellen eines kartesischen Gitters
@@ -9,10 +9,10 @@ ymesh = linspace(0,1,11);
 zmesh = linspace(0,1,11);
 msh = cartMesh(xmesh, ymesh, zmesh);
 
-% Gewählten Kondensator definieren (Materialien, Potentiale)
+% Gewaehlten Kondensator definieren (Materialien, Potentiale)
 % ...
 
-% Berechnen der Permittivität mit boxMesher
+% Berechnen der Permittivitaet mit boxMesher
 eps = boxMesher(   ,   ,   );
 
 
@@ -23,7 +23,7 @@ pot = boxMesher(   ,   ,   );
 % Erstellen des Ladungsvektors
 q = zeros(msh.np,1);
 
-% Lösen des Gleichungssystems mit dem ES-Solver
+% Loesen des Gleichungssystems mit dem ES-Solver
 [phi, ebow, dbow, relRes] = solveES( msh, eps, pot, q);
 
 % Plot
