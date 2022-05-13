@@ -10,6 +10,7 @@ zmesh = linspace(0,1,11);
 msh = cartMesh(xmesh, ymesh, zmesh);
 
 % Gewaehlten Kondensator definieren (Materialien, Potentiale)
+defaultvalue = 1;
 boxesEps(1).box = [1, msh.nx, 1, msh.ny, 1, msh.nz];
 boxesEps(1).value = 1;
 
@@ -21,7 +22,7 @@ boxesPot(3).box = [1, msh.nx, 1, 1, 1, msh.nz];
 boxesPot(3).value = 0;
 
 % Berechnen der Permittivitaet mit boxMesher
-eps = boxMesher(msh, boxesEps, 1);
+eps = boxMesher(msh, boxesEps, defaultvalue);
 
 
 % Berechnen des Potentials mit boxMesher
