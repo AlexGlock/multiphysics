@@ -112,15 +112,19 @@ indz = floor(msh.nz/2);
 
 % Potential plotten
 plotPotential(msh, phiE, indz);
+set(1,'papersize',[14,12])
+print -dpdf phiE.pdf
 
 %% E-Feld plotten (2D)
 figure(2);
 plotEdgeVoltage(msh, ebowE, indz, bcs);
 xlabel('x');
 ylabel('y');
+set(2,'papersize',[12,12])
+print -dpdf ebowE.pdf
 
 %% E-Feld plotten (3D)
-figure(3);
-plotEdgeVoltage(msh, ebowE, 1:msh.nz, bcs);
-xlabel('x')
-ylabel('y');
+%figure(3);
+%plotEdgeVoltage(msh, ebowE, 1:msh.nz, bcs);
+%xlabel('x')
+%ylabel('y');
