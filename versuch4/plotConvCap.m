@@ -74,3 +74,5 @@ figure(1); clf;
 plot(nrgridpoints, cap, 'b.-', 'LineWidth', 2);
 xlabel('Anzahl der Punkte np');
 ylabel('Numerisch berechnete Kapazitaet des Kondensators / F');
+set(1,'papersize',[15,12])
+print -dpdf plotConvCaps.pdf
