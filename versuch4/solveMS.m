@@ -10,11 +10,6 @@
 %   bbow        Magnetische Gitterfluss
 %   relRes      Relatives Residuum für jeden Iterationsschritt
 
-
-
-
-    
-
 function [hbow, bbow, relRes] = solveMS(msh, mu, jbow)
 
     bc = [ 0 0 0 0 0 0 ];
@@ -27,7 +22,7 @@ function [hbow, bbow, relRes] = solveMS(msh, mu, jbow)
 
     % Erzeugung Materialmatrix Permeabilität
     np = msh.np;
-    Mmu = createMeps(msh, ds, da, dat, mu.*ones(np,1), bc);
+    Mmu = createMeps(msh, ds, da, dat, mu, bc);
 
     % Berechnung Systemmatrix
     A = st * Mmu * st'; 

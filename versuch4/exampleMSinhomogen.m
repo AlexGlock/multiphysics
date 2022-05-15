@@ -13,11 +13,20 @@ Mz = msh.Mz;
 np = msh.np;
 
 % Erstellen des Strom-Vektors (kanonischen Index berechnen und benutzen)
-% jbow = 
-% ...
+jbow = zeros(1,3*np);
+
+for k = 1:1:max(size(zmesh))
+    n = 1 + 4*Mx + 4*My + (k-1)*Mz + 2*np;
+    jbow(n) = 1000;  
+end
 
 % Erstellen der Permeabilitätsmatrix mit boxMesher
-% mu = 
+defaultvalue = 4*pi*10^(-7);
+boxesB(1).box = [1, msh.nx, 1, floor(msh.ny/2), 1, msh.nz];
+boxesB(1).value = defaultvalue;
+boxesB(2).box = [1, msh.nx, ceil(msh.ny/2), msh.ny, 1, msh.nz];
+boxesB(2).value = 10 * defaultvalue;
+mu = boxMesher(msh, boxesB, defaultvalue); 
 
 % Lösen des Systems
 [hbow, bbow, relRes] = solveMS(msh, mu, jbow);
