@@ -40,3 +40,5 @@ figure(1); clf;
 semilogy(relRes, 'LineWidth', 2);
 xlabel('Anzahl der Iterationen n');
 ylabel('relatives Residuum');
+set(1,'papersize',[15,12])
+print -dpdf plotConv.pdf
