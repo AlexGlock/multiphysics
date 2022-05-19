@@ -165,8 +165,8 @@ ylabel('Strom jbow_{mqs,t}');
 disp('Vergleich Frequenzbereich <=> Zeitbereich')
 
 % Transformation der Frequenzbereichslösung in den Zeitbereich
-% abow_mqs_f_t = ;
-% jbow_mqs_f_t = ;
+abow_mqs_f_t = real(abow_mqs_f * exp(1i*omega*time));
+jbow_mqs_f_t = real(jbow_mqs_f * exp(1i*omega*time));
 
 % Vektorpotential (Lösung der DGL) Frequenzbereich vs. Zeitbereich für gewählte duale Fläche (idx2plot) über die Zeit plotten
 figure(7)
