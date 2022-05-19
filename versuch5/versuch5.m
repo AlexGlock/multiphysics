@@ -66,7 +66,18 @@ if solve_statik
 	title('Statische Loesung des Vektorpotentials')
 
     % Grafisches Darstellen der z-Komponente des B-Feldes
-	% ...
+	figure(2) 
+    k = 3;
+    b_flat = zeros(msh.nx,msh.ny);
+    for i = 1:1:msh.nx
+        for j = 1:1:msh.ny
+            n = 1 + (i-1)*Mx + (j-1)*My + (k-1)*Mz + 2*np;
+            b_flat(i,j) = bbow_ms(n);
+        end
+    end   
+        
+    surf(xmesh,xmesh,b_flat)
+    
 end
 
 % Verschiebt diese Zeile zur nächsten Aufgabe, wenn Aufgabe 3 abgeschlossen ist
@@ -111,11 +122,11 @@ ylabel('y')
 disp('Loesung des quasistatischen Problems im Zeitbereich')
 
 % Zeitparameter so setzen, dass drei Perioden durchlaufen werden
-periods =                   % Anzahl an Perioden
-nperperiod =                % Anzahl an Zeitpunkten pro Periode
-tend =                      % Endzeit
-nt =                        % Gesamtzahl an Zeitpunkten
-time =                      % Zeit-Vektor
+%periods =                   % Anzahl an Perioden
+%nperperiod =                % Anzahl an Zeitpunkten pro Periode
+%tend =                      % Endzeit
+%nt =                        % Gesamtzahl an Zeitpunkten
+%time =                      % Zeit-Vektor
 
 % Anfangswert für die Lösung der DGL wählen
 % abow_init = ...
