@@ -25,7 +25,7 @@ defaultvalue = 4*pi*10^(-7);
 boxesB(1).box = [1, msh.nx, 1, floor(msh.ny/2), 1, msh.nz];
 boxesB(1).value = defaultvalue;
 boxesB(2).box = [1, msh.nx, ceil(msh.ny/2), msh.ny, 1, msh.nz];
-boxesB(2).value = 10 * defaultvalue;
+boxesB(2).value = 2 * defaultvalue;
 mu = boxMesher(msh, boxesB, defaultvalue); 
 
 % Lösen des Systems
