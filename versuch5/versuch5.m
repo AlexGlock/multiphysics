@@ -7,37 +7,45 @@
 % Konsolenausgabe
 disp('Gitter erstellen')
 % Erstellen des Gitters mit cartMesh
-% xmesh = 
-% ymesh = 
-% zmesh = 
-% msh = cartMesh(xmesh, ymesh, zmesh);
+xmesh = [1,2,3,4,5,6];
+ymesh = [1,2,3,4,5,6];
+zmesh = [1,2,3,4,5];
+msh = cartMesh(xmesh, ymesh, zmesh);
 
-% np = msh.np;
-% Mx = msh.Mx;
-% My = msh.My;
-% Mz = msh.Mz;
+np = msh.np;
+Mx = msh.Mx;
+My = msh.My;
+Mz = msh.Mz;
 
 % Randbedingung für alle Raumrichtungen definieren [xmin, xmax, ymin, ymax, zmin, zmax] (0 = magnetisch, 1 = elektrisch)
-% bc = [ , , , , , ] 
+bc = [0,0,0,0,0,0]; 
 
 % Erstellen von jsbow
 jsbow = zeros(3*np,1);
-% jsbow(...) = ...;
-% jsbow(...) = ...;
-% ...
+jsbow(87) = 1000;
+jsbow(93) = -1000;
+jsbow(268) = 1000;
+jsbow(267) = -1000;
+
 
 % Erstellen der Materialverteilung mui und kappa mithilfe von boxmesher
 disp('Materialmatrizen erstellen')
-% boxeskappa(1).box = [ ,  ,  ,  ,  , ];
-% boxeskappa(1).value = 
-% kappa = boxMesher(msh, boxeskappa, ...);
+boxeskappa(1).box = [1, 6, 1, 6, 1, 2];
+boxeskappa(1).value = 5.8*10^(7);
+boxeskappa(2).box = [1, 6, 1, 6, 2, 5];
+boxeskappa(2).value = 0;
+defaultvalue = 0;
+kappa = boxMesher(msh, boxeskappa, defaultvalue);
 
-% boxesmu(1).box = [ ,  ,  ,  ,  , ];
-% boxesmu(1).value = 
-% mu = boxMesher(msh, boxesmu, ...);
+boxesmu(1).box = [1, 6, 1, 6, 1, 2];
+boxesmu(1).value = 1000*4*pi*10^(-7);
+boxesmu(2).box = [1, 6, 1, 6, 2, 5];
+boxesmu(2).value = 4*pi*10^(-7);
+defaultvalue = 0;
+mu = boxMesher(msh, boxesmu, defaultvalue);
 
 % Inverse Permeabilität berechnen (siehe Hinweis Aufgabe 1)
-% mui = ....
+mui = nullInv(mu);
 
 
 %% Aufgabe 3
