@@ -80,8 +80,8 @@ return
 disp('Lösung des quasistatischen Problems im Frequenzbereich')
 
 % Frequenz festlegen
-% f = 
-% omega =
+f = 50;
+omega = 2*pi*f;
 
 % Löser ausführen
 [abow_mqs_f, hbow_mqs_f, bbow_mqs_f, jbow_mqs_f, relRes] = solveMQSF(msh, mui,...
@@ -111,17 +111,17 @@ ylabel('y')
 disp('Loesung des quasistatischen Problems im Zeitbereich')
 
 % Zeitparameter so setzen, dass drei Perioden durchlaufen werden
-periods =                   % Anzahl an Perioden
-nperperiod =                % Anzahl an Zeitpunkten pro Periode
-tend =                      % Endzeit
-nt =                        % Gesamtzahl an Zeitpunkten
-time =                      % Zeit-Vektor
+periods = 3;                  % Anzahl an Perioden
+nperperiod = 10;              % Anzahl an Zeitpunkten pro Periode
+tend = periods / f;           % Endzeit
+nt = periods*nperperiod;      % Gesamtzahl an Zeitpunkten
+time = linspace(0, tend, nt); % Zeit-Vektor
 
 % Anfangswert für die Lösung der DGL wählen
-% abow_init = ...
+abow_init = zeros(3*np);
 
 % Anregung jsbow als Funktion der Zeit
-% jsbow_t = @(t)(....);
+jsbow_t = @(t) sin(omega*t) * jsbow;
 
 % Lösen des MQS-Problems
 [abow_mqs_t, hbow_mqs_t, bbow_mqs_t, jbow_mqs_t, ebow_mqs_t] = solveMQST(msh, mui, kappa, abow_init, jsbow_t, time, bc);
