@@ -25,7 +25,7 @@ function [abow, hbow, bbow, relRes] = solveMSVec(msh, mui, jbow)
     mmui = createMmui(msh, ds, dst, da, mui);
 
     % Berechnung Systemmatrix
-    % A =
+    A = c'*mmui*c;
 
     % Gleichungssystem loesen
     [abow, ~, ~, ~, resVec] = gmres(A, jbow, 20, 1e-8, 500);
@@ -36,7 +36,7 @@ function [abow, hbow, bbow, relRes] = solveMSVec(msh, mui, jbow)
                                     % jedoch fuer alle berechnen.
 
     % Magnetische Gitterspannung und Gitterfluss berechnen
-    % bbow =
-    % hbow =
+    bbow = c*abow;
+    hbow = mmui*bbow;
 
 end

@@ -33,11 +33,11 @@ function [abow, hbow, bbow, jbow, relRes] = solveMQSF(msh, mui, kap, jsbow, f, b
     mkap = createMeps(msh, ds, da, dat, kap, bc);
 
     % Berechnung der Kreisfrequenz
-    % omega =
+    omega = 2*pi*f;
 
     % Berechnung Systemmatrix A und rechte Seite rhs
-    % A =
-    % rhs =
+    A = c'*mmui*c + 1i*omega*mkap;
+    rhs = jsbow;
 
     % Initialisieren der Lösung
     % abow =
@@ -55,7 +55,7 @@ function [abow, hbow, bbow, jbow, relRes] = solveMQSF(msh, mui, kap, jsbow, f, b
 
     % Magnetische Gitterspannung, magnetischen Fluss und Stromgitterfluss
     % berechnen
-    % bbow =
-    % hbow =
-    % jbow =
+    bbow = c*abow;
+    hbow = mmui*bbowM;
+    jbow = -1i*omega*mkap*abow;
 end
