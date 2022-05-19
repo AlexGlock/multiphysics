@@ -70,7 +70,7 @@ function [abow, hbow, bbow, jbow, ebow] = solveMQST(msh, mui, kap, abow_init, js
 
       % Update der elektrischen Gitterspannung ebow_t
       % Rückwärtsdifferenzenquotienten verwenden, nicht Formel aus Vorbereitung!
-      ebow_t = (abow_t - abow_t_old)/tau;
+      ebow_t = (abow_t_old - abow_t)/tau;
 
       % Magnetische Gitterspannung, magnetischen Fluss und
       % Stromgitterfluss für diesen Zeitschritt speichern
