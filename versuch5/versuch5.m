@@ -52,7 +52,7 @@ mui = nullInv(mu);
 % -------------------------------------------------------------------------
 % ----------- Lösen des magnetostatischen Problems ------------------------
 % -------------------------------------------------------------------------
-solve_statik = true;
+solve_statik = false;
 if solve_statik
 	disp('Loesung des statischen Problems')
     
@@ -81,7 +81,7 @@ if solve_statik
 end
 
 % Verschiebt diese Zeile zur nächsten Aufgabe, wenn Aufgabe 3 abgeschlossen ist
-return
+%return
 
 
 %% Aufgabe 5
@@ -129,7 +129,7 @@ nt = periods*nperperiod;      % Gesamtzahl an Zeitpunkten
 time = linspace(0, tend, nt); % Zeit-Vektor
 
 % Anfangswert für die Lösung der DGL wählen
-abow_init = zeros(3*np);
+abow_init = zeros(3*np, 1);
 
 % Anregung jsbow als Funktion der Zeit
 jsbow_t = @(t) sin(omega*t) * jsbow;

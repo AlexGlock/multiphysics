@@ -32,7 +32,7 @@ function [abow, hbow, bbow, jbow, ebow] = solveMQST(msh, mui, kap, abow_init, js
     mkap = createMeps(msh, ds, da, dat, kap, bc);
 
     % Anzahl der Zeitpunkte auslesen
-    nt = size(time);
+    nt = max(size(time));
 
     % Speichermatrizen fuer die Felder zu bestimmten Zeiten
     np = msh.np;

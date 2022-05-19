@@ -56,6 +56,6 @@ function [abow, hbow, bbow, jbow, relRes] = solveMQSF(msh, mui, kap, jsbow, f, b
     % Magnetische Gitterspannung, magnetischen Fluss und Stromgitterfluss
     % berechnen
     bbow = c*abow;
-    hbow = mmui*bbowM;
+    hbow = mmui*bbow;
     jbow = -1i*omega*mkap*abow;
 end
