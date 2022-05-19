@@ -123,7 +123,7 @@ disp('Loesung des quasistatischen Problems im Zeitbereich')
 
 % Zeitparameter so setzen, dass drei Perioden durchlaufen werden
 periods = 3;                  % Anzahl an Perioden
-nperperiod = 10;              % Anzahl an Zeitpunkten pro Periode
+nperperiod = 100;             % Anzahl an Zeitpunkten pro Periode
 tend = periods / f;           % Endzeit
 nt = periods*nperperiod;      % Gesamtzahl an Zeitpunkten
 time = linspace(0, tend, nt); % Zeit-Vektor
@@ -132,7 +132,7 @@ time = linspace(0, tend, nt); % Zeit-Vektor
 abow_init = zeros(3*np, 1);
 
 % Anregung jsbow als Funktion der Zeit
-jsbow_t = @(t) sin(omega*t) * jsbow;
+jsbow_t = @(t) cos(omega*t) * jsbow;
 
 % Lösen des MQS-Problems
 [abow_mqs_t, hbow_mqs_t, bbow_mqs_t, jbow_mqs_t, ebow_mqs_t] = solveMQST(msh, mui, kappa, abow_init, jsbow_t, time, bc);

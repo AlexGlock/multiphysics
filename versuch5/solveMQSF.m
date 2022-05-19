@@ -39,9 +39,6 @@ function [abow, hbow, bbow, jbow, relRes] = solveMQSF(msh, mui, kap, jsbow, f, b
     A = c'*mmui*c + 1i*omega*mkap;
     rhs = jsbow;
 
-    % Initialisieren der Lösung
-    % abow =
-
     % Gleichungssystem loesen
     [abow, flag, relRes, iter, resVec] = gmres(A, rhs, 20, 1e-6, 1000);
     % Wenn gmres(20) nicht konvergieren würde, probieren Sie bitte bicgstab

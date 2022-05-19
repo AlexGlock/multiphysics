@@ -50,7 +50,7 @@ function [abow, hbow, bbow, jbow, ebow] = solveMQST(msh, mui, kap, abow_init, js
       if i==1
         tau = time(i+1)-time(i);
       else
-      %  tau =
+        tau = time(i)-time(i-1);
       end
 
       % Alten Feldwert des Vektorpotentials speichern
@@ -61,7 +61,7 @@ function [abow, hbow, bbow, jbow, ebow] = solveMQST(msh, mui, kap, abow_init, js
 
       % Rechte Seite rhs fuer diesen Zeitschritt bestimmen
       je = jsbow_t(time(i));
-      rhs = je + 1/tau * mmui*abow_t_old;
+      rhs = je + 1/tau * mkap*abow_t_old;
 
       % Gleichungssystem loesen
       abow_t = gmres(A, rhs, 20, 1e-6, 500);
@@ -70,14 +70,14 @@ function [abow, hbow, bbow, jbow, ebow] = solveMQST(msh, mui, kap, abow_init, js
 
       % Update der elektrischen Gitterspannung ebow_t
       % Rückwärtsdifferenzenquotienten verwenden, nicht Formel aus Vorbereitung!
-      ebow_t = (ebow(i+1) - ebow(i))/tau;
+      ebow_t = (abow_t - abow_t_old)/tau;
 
       % Magnetische Gitterspannung, magnetischen Fluss und
       % Stromgitterfluss für diesen Zeitschritt speichern
       abow(:,i) = abow_t;
       ebow(:,i) = ebow_t;
       bbow(:,i) = c*abow_t;
-      hbow(:,i) = mmui*bbow(:,1);
-      jbow(:,i) = c'*hbow(:,1);
+      hbow(:,i) = mmui*bbow(:,i);
+      jbow(:,i) = mkap*ebow_t;
     end
 end
