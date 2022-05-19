@@ -192,11 +192,17 @@ legend('Zeitloesung','Frequenzloesung')
 
 % Vergleich von Zeitlösung zur Frequenzlösung im Zeitbereich
 % -> Implementierung der Fehlernorm aus der Aufgabenstellung
-% ...
-% ...
-% ...
-% errorTimeVSfrequency = 
-% fprintf('Relativer Fehler im Zeitbereich: %e\n',errorTimeVSfrequency);
+imax = size(jbow_mqs_t);
+imax = imax(1,2);
+errorz = zeros(1,imax);
+errorn = zeros(1,imax);
+for i = 1:1:imax
+    errorz(i) = norm(jbow_mqs_t(:,i) - jbow_mqs_f_t(:,i));
+    errorn(i) = norm(jbow_mqs_f_t(:,i));
+end
+
+errorTimeVSfrequency = max(errorz) / max(errorn);
+fprintf('Relativer Fehler im Zeitbereich: %e\n',errorTimeVSfrequency);
 
 %% Aufgabe 9
 % -------------------------------------------------------------------------
