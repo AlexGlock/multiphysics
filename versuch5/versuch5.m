@@ -18,7 +18,7 @@ My = msh.My;
 Mz = msh.Mz;
 
 % Randbedingung für alle Raumrichtungen definieren [xmin, xmax, ymin, ymax, zmin, zmax] (0 = magnetisch, 1 = elektrisch)
-bc = [0,0,0,0,0,0]; 
+bc = [0,0,0,0,1,0]; 
 
 % Erstellen von jsbow
 jsbow = zeros(3*np,1);
@@ -216,22 +216,22 @@ fprintf('Relativer Fehler im Zeitbereich: %e\n',errorTimeVSfrequency);
 % Transformation der Zeitbereichslösung in den Frequenzbereich
 % Bestimmung von Real- und Imaginärteil des komplexen Phasors,
 % der aus dem Zeitsignal gewonnen werden kann
-    % t_real =
-    % t_imag =
-    jbow_re_t = zeros(3*msh.np,1);
-    jbow_im_t = zeros(3*msh.np,1);
-    for i = 1:3*msh.np
-    %    jbow_re_t(i) = interp1(...);
-    %    jbow_im_t(i) = ...
-    end
+t_real = 0;
+t_imag = 0.015;
+jbow_re_t = zeros(3*msh.np,1);
+jbow_im_t = zeros(3*msh.np,1);
+for i = 1:3*msh.np
+    jbow_re_t(i) = interp1(time,jbow_mqs_t(i,:),t_real);
+    jbow_im_t(i) = interp1(time,jbow_mqs_t(i,:),t_imag);
+end
 
 
 % Vergleich von Real- und Imaginärteil des Phasors aus dem Zeitbereich
 % mit dem Phasor aus der Frequenzbereichslösung (Implementierung der Formel aus Aufgabenstellung)
-% errorPhasorReal = ...
-% errorPhasorImag = ...
-% fprintf('Relativer Fehler Realteil: %e\n',errorPhasorReal);
-% fprintf('Relativer Fehler Imaginärteil: %e\n',errorPhasorImag);
+errorPhasorReal = norm(jbow_re_t - real(jbow_mqs_f))/norm(real(jbow_mqs_f));
+errorPhasorImag = norm(jbow_im_t - imag(jbow_mqs_f))/norm(imag(jbow_mqs_f));
+fprintf('Relativer Fehler Realteil: %e\n',errorPhasorReal);
+fprintf('Relativer Fehler Imaginärteil: %e\n',errorPhasorImag);
   
 % Plot: gleiches Feldbild für Phasoren des Zeitintegration zum optischen 
 % Vergleich mit den Plots, die man für die Phasoren des Frequenzbereiches
@@ -258,5 +258,5 @@ zlabel('z')
 % -------------------------------------------------------------------------
 
 % Konvergenz des Fehlers der Zeitintegration
-% nperperiodMax = 100
-% plotConvSolveMQST(msh,mui,kappa,jsbow_t,jbow_mqs_f,periods,tend,f,nperperiodMax,bc);
+nperperiodMax = 100;
+plotConvSolveMQST(msh,mui,kappa,jsbow_t,jbow_mqs_f,periods,tend,f,nperperiodMax,bc);
