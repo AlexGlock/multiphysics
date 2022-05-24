@@ -80,15 +80,15 @@ end
 
 % Plot Vergleich im Zeitbereich
 figure(11)
-plot(log(1:length(nperperiod_vec)),log(errorTimeDomain),'-x','LineWidth',2);
-xlabel('Anzahl der Stuetzstellen pro Periode');
-ylabel('Relativer Fehler im Zeitbereich');
+plot(log(nperperiod_vec),log(errorTimeDomain),'-x','LineWidth',2);
+xlabel('Anzahl der Stuetzstellen pro Periode','FontSize',14);
+ylabel('Relativer Fehler im Zeitbereich','FontSize',14);
 
 % Plot Vergleich im Frequenzbereich (Vergleich der Phasoren)
 figure(12)
-plot(log(1:length(nperperiod_vec)),log(errorPhasorReal),'-x','LineWidth',2);
+plot(log(nperperiod_vec),log(errorPhasorReal),'-x','LineWidth',2);
 hold all;
-plot(log(1:length(nperperiod_vec)),log(errorPhasorImag),'-x','LineWidth',2);
+plot(log(nperperiod_vec),log(errorPhasorImag),'-x','LineWidth',2);
 hold off;
 xlabel('Anzahl der Stuetzstellen pro Periode');
 ylabel('Relativer Fehler im Frequenzbereich');
