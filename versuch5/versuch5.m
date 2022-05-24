@@ -18,7 +18,7 @@ My = msh.My;
 Mz = msh.Mz;
 
 % Randbedingung für alle Raumrichtungen definieren [xmin, xmax, ymin, ymax, zmin, zmax] (0 = magnetisch, 1 = elektrisch)
-bc = [0,0,0,0,1,0]; 
+bc = [1,1,1,1,1,1]; 
 
 % Erstellen von jsbow
 jsbow = zeros(3*np,1);
@@ -217,7 +217,7 @@ fprintf('Relativer Fehler im Zeitbereich: %e\n',errorTimeVSfrequency);
 % Bestimmung von Real- und Imaginärteil des komplexen Phasors,
 % der aus dem Zeitsignal gewonnen werden kann
 t_real = 0;
-t_imag = 0.015;
+t_imag = t_real + 3/4 * 1/f;
 jbow_re_t = zeros(3*msh.np,1);
 jbow_im_t = zeros(3*msh.np,1);
 for i = 1:3*msh.np
