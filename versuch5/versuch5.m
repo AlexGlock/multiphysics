@@ -54,7 +54,7 @@ mui = nullInv(mu);
 % -------------------------------------------------------------------------
 solve_statik = false;
 if solve_statik
-	disp('Loesung des statischen Problems')
+	disp('Loesung des statischen Problems') %#ok<UNRCH>
     
 	% Solver benutzen, um A-Feld zu bestimmen
 	[abow_ms, hbow_ms, bbow_ms, relRes] = solveMSVec(msh, mui, jsbow);
