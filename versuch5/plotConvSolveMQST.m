@@ -64,7 +64,7 @@ for e=1:length(nperperiod_vec)
 
     % Real- und Imaginärteil der Stromdichte aus Zeitsignal bestimmen
     t_real = 0;
-    t_imag = 0.015;
+    t_imag = t_real + 3/4 * 1/f;
     jbow_re_t = zeros(3*msh.np,1);
     jbow_im_t = zeros(3*msh.np,1);
     for i = 1:3*msh.np
