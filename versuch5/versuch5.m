@@ -106,6 +106,8 @@ title(['Realteil der Stromdichte auf der Plattenoberflaeche, '  ...
       'Quasistatik, Frequenzbereich'])
 xlabel('x')
 ylabel('y')
+set(3,'papersize',[18,18])
+print -dpdf msf_re.pdf
 
 figure(4)
 plotEdgeVoltage(msh,imag(jbow_mqs_f),2,bc)
@@ -113,6 +115,8 @@ title(['Imaginaerteil der Stromdichte auf der Plattenoberflaeche, '  ...
       'Quasistatik, Frequenzbereich'])
 xlabel('x')
 ylabel('y') 
+set(4,'papersize',[18,18])
+print -dpdf msf_im.pdf
 
 
 %% Aufgabe 7
@@ -147,6 +151,8 @@ plot(time,abow_mqs_t(idx2plot,:));
 title('Loesung des quasistatischen Problems im Zeitbereich');
 xlabel('Zeit');
 ylabel('Vektorpotential abow_{mqs,t}');
+set(5,'papersize',[14,12])
+print -dpdf mst_vec.pdf
 
 % Stromdichteverteilung für gewählte duale Fläche (idx2plot) über die Zeit plotten
 figure(6)
@@ -154,6 +160,8 @@ plot(time,jbow_mqs_t(idx2plot,:));
 title('Loesung des quasistatischen Problems im Zeitbereich');
 xlabel('Zeit');
 ylabel('Strom jbow_{mqs,t}');
+set(6,'papersize',[14,12])
+print -dpdf mst_jbow.pdf
 
 
 %% Aufgabe 8

@@ -36,11 +36,19 @@ function [abow, hbow, bbow, jbow, relRes] = solveMQSF(msh, mui, kap, jsbow, f, b
     omega = 2*pi*f;
 
     % Berechnung Systemmatrix A und rechte Seite rhs
-    A = c'*mmui*c + 1i*omega*mkap;
-    rhs = jsbow;
+    idx = setdiff(1:3*np, getGhostEdges(msh));
+    AF = c'*mmui*c + 1i*omega*mkap;
+    A = AF(idx, idx);
+    rhs = jsbow(idx);
+
+    % Initialisieren der Lösung
+    abow = zeros(3*np, 1);
 
     % Gleichungssystem loesen
-    [abow, flag, relRes, iter, resVec] = gmres(A, rhs, 20, 1e-6, 1000);
+    [abow_idx, flag, relRes, iter, resVec] = pcg(A, rhs, 1e-6, 1000, diag(diag(A)));
+    abow(idx) = abow_idx;
+
+    % [abow, flag, relRes, iter, resVec] = gmres(A, rhs, 20, 1e-6, 1000);
     % Wenn gmres(20) nicht konvergieren würde, probieren Sie bitte bicgstab
     % [abow, flag, relRes, iter, resVec] = bicgstab(A, rhs, 1e-6, 1000);
     if flag == 0
