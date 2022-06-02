@@ -1,18 +1,37 @@
 % Versuch 6
 
 %% Gitter erstellen (nicht mesh nennen, da dies ein Matlab-Befehl ist)
-% nx = 
-% ny = 
-% nz = 
-% xmesh = 
-% ymesh = 
-% zmesh = 
-% msh = cartMesh(xmesh, ymesh, zmesh); 
+gitter_1 = true;
+gitter_2 = false;
+gitter_3 = false;
+
+if gitter_1 == true
+    nx = 11;
+    ny = 11;
+    nz = 2;
+end
+
+if gitter_2 == true
+    nx = 41;
+    ny = 41;
+    nz = 2;
+end
+
+if gitter_3 == true
+    nx = 91;
+    ny = 91;
+    nz = 2;
+end
+
+xmesh = 1:1:nx;
+ymesh = 1:1:ny;
+zmesh = 1:1:nz;
+msh = cartMesh(xmesh, ymesh, zmesh); 
 
 % Gitterweiten in x-,y- und z-Richtung (äquidistant vorausgesetzt)
-% delta_x = 
-% delta_y = 
-% delta_z = 
+delta_x = 1/(nx-1);
+delta_y = 1/(ny-1);
+delta_z = 1/(nz-1);
 
 Mx = msh.Mx;
 My = msh.My;
@@ -28,13 +47,13 @@ np = msh.np;
 % explizites Verfahren und damit Randbedingungen am besten in den
 % Materialmatrizen gesetzt werden
 eps0 = 8.854e-12;
-% eps_r = 
-% epsilon = 
+eps_r = 1;
+epsilon = eps0 * eps_r;
 mu0 = 4e-7*pi;
-% mu_r = 
-% mu = 
-% mui = 
-% bcs = [ , , , , , ];
+mu_r = 1;
+mu = mu0 * mu_r;
+mui = 1/mu;
+bcs = [1,1,1,1,1,1];
 
 Mmui = createMmui(msh, ds, dst, da, mui, bcs);
 Mmu = nullInv(Mmui);
@@ -46,21 +65,21 @@ Mepsi = nullInv(Meps);
 %% CFL-Bedingung
 
 % Minimale Gitterweite bestimmen
-% delta_s = 
+delta_s = min([delta_x,delta_y,delta_z]);
 
 % Berechnung und Ausgabe des minimalen Zeitschritts mittels CFL-Bedingung
-% deltaTmaxCFL = 
-% fprintf('Nach CFL-Bedingung: deltaTmax = %e\n',deltaTmaxCFL);
+deltaTmaxCFL = sqrt(mu*epsilon * 1/(1/(delta_x^2) + 1/(delta_y^2) + 1/(delta_z^2)));
+fprintf('Nach CFL-Bedingung: deltaTmax = %e\n',deltaTmaxCFL);
 
 %% Stabilitätsuntersuchung mithilfe der Systemmatrix
 % Methode 1
 if msh.np<4000
 
-% A12 = 
-% A21 = 
-% zero = sparse(3*np, 3*np);
-% A = [zero, A12; A21, zero];
-% [~, lambdaMaxA] = eigs(A,1);
+A12 = -Mmui * c;
+A21 = Mepsi * c';
+zero = sparse(3*np, 3*np);
+A = [zero, A12; A21, zero];
+[~, lambdaMaxA] = eigs(A,1);
 
 % Workaround, da Octave bei [V,D] = eigs(A,1) eine Matrix zurückgibt
 % if ~isscalar(lambdaMaxA)
@@ -68,8 +87,8 @@ if msh.np<4000
 % end
 
 % delta T bestimmen
-% deltaTmaxEigA = 
-% fprintf('Nach Eigenwert-Berechnung von A: deltaTmax = %e\n', deltaTmaxEigA);
+deltaTmaxEigA = 2/abs(lambdaMaxA);
+fprintf('Nach Eigenwert-Berechnung von A: deltaTmax = %e\n', deltaTmaxEigA);
 
 end
 
