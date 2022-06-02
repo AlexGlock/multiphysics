@@ -98,7 +98,7 @@ end
 sigma = 6e-10;
 dt = 1e-11;
 tend = 2*sigma;
-steps = floor(tend/dt)+1;
+steps = floor(tend/dt);
 sourcetype= 1;  % 1: Gauss Anregung, 2: Harmonisch, 3: Konstante Anregung
 
 % Anregung jsbow als anonyme Funktion, die einen 3*np Vektor zurückgibt
@@ -137,7 +137,7 @@ draw_only_every = 4;
 % Zeitintegration
 for ii = 1:steps
     % Zeitpunkt berechnen
-    t = (ii-1)*dt;
+    t = ii*dt;
 
     % alte Werte speichern
     ebow_old = ebow_new;
@@ -148,7 +148,8 @@ for ii = 1:steps
         if t <= 2*sigma
             js = jsbow_gauss(t);
         else
-            js = 0;
+            %js = 0;
+            js = sparse(3*np,1);
         end
     elseif sourcetype == 2
         % Harmonische Anregung
@@ -214,7 +215,6 @@ ylabel('Energie des EM-Feldes W in J')
 leistungSystem = diff(energy) / dt;
 figure(4); clf;
 hold on
-% TODO: Zeitschritt und steps-1
 plot(2*dt:dt:dt*(steps), leistungSystem)
 plot(dt:dt:dt*steps, leistungQuelle, 'r')
 hold off
