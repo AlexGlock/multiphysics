@@ -23,9 +23,9 @@ if gitter_3 == true
     nz = 2;
 end
 
-xmesh = 1:1:nx;
-ymesh = 1:1:ny;
-zmesh = 1:1:nz;
+xmesh = linspace(0,1,nx);
+ymesh = linspace(0,1,ny);
+zmesh = linspace(0,1,nz);
 msh = cartMesh(xmesh, ymesh, zmesh); 
 
 % Gitterweiten in x-,y- und z-Richtung (äquidistant vorausgesetzt)
@@ -95,8 +95,8 @@ end
 %% Experimentelle Bestimmung mithilfe der Energie des Systems
 
 % Parameter der Zeitsimulation
-sigma = 6*10^(-10);
-dt = 1*10^(-11);
+sigma = 6e-10;
+dt = 1e-11;
 tend = 2*sigma;
 steps = floor(tend/dt)+1;
 sourcetype= 1;  % 1: Gauss Anregung, 2: Harmonisch, 3: Konstante Anregung
