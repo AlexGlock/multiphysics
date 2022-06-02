@@ -96,9 +96,9 @@ end
 
 % Parameter der Zeitsimulation
 sigma = 6*10^(-10);
-dt = 1*10^(-13);
+dt = 1*10^(-11);
 tend = 2*sigma;
-steps = ceil(tend/dt)+1;
+steps = floor(tend/dt)+1;
 sourcetype= 1;  % 1: Gauss Anregung, 2: Harmonisch, 3: Konstante Anregung
 
 % Anregung jsbow als anonyme Funktion, die einen 3*np Vektor zurückgibt
@@ -107,7 +107,7 @@ jsbow_space = zeros(3*np, 1);
 x_L = ceil(nx/2);
 y_L = ceil(ny/2);
 
-for k = 1:1:nz
+for k = 1:nz-1
     n = 1 + x_L*Mx + y_L*My + (k-1)*Mz + 2*np;
     jsbow_space(n) = 1;  
 end
@@ -178,7 +178,7 @@ for ii = 1:steps
 
     % Gesamtenergie und Quellenenergie für diesen Zeitschritt berechnen
     energy_t = 0.5 * (ebow_new' * Meps*ebow_new + hbow_new' * Mmu * hbow_new);
-    leistungQuelle_t = energy_t/dt;
+    leistungQuelle_t = ebow_new' * js;
 
     % Energiewerte speichern
     energy(ii) =  energy_t;
@@ -186,37 +186,38 @@ for ii = 1:steps
 end
 
 % Anregungsstrom über der Zeit plotten
-% figure(2)
-% jsbow_plot = zeros(1,steps);
-% for step = 1:steps
-%     if sourcetype == 1
-%         jsbow_spatial = jsbow_gauss(step*dt);
-%     elseif sourcetype == 2
-%         jsbow_spatial = jsbow_harm(step*dt);
-%     elseif sourcetype == 3
-%         jsbow_spatial = jsbow_const(step*dt);
-%     end
-%     nonzero_idx = find(jsbow_spatial~=0);
-%     jsbow_plot(step) = jsbow_spatial(nonzero_idx);
-% end
-% plot(dt:dt:dt*steps, jsbow_plot);
-% xlabel('t in s');
-% ylabel('Anregungsstrom J in A');
+figure(2)
+jsbow_plot = zeros(1,steps);
+for step = 1:steps
+    if sourcetype == 1
+        jsbow_spatial = jsbow_gauss(step*dt);
+    elseif sourcetype == 2
+        jsbow_spatial = jsbow_harm(step*dt);
+    elseif sourcetype == 3
+        jsbow_spatial = jsbow_const(step*dt);
+    end
+    nonzero_idx = find(jsbow_spatial~=0);
+    jsbow_plot(step) = jsbow_spatial(nonzero_idx);
+end
+plot(dt:dt:dt*steps, jsbow_plot);
+xlabel('t in s');
+ylabel('Anregungsstrom J in A');
 
 % Energie über der Zeit plotten
-% figure(3); clf;
-% plot (dt:dt:dt*steps, energy)
-% legend(['Zeitschritt: ', num2str(dt)])
-% xlabel('t in s')
-% ylabel('Energie des EM-Feldes W in J')
+figure(3); clf;
+plot (dt:dt:dt*steps, energy)
+legend(['Zeitschritt: ', num2str(dt)])
+xlabel('t in s')
+ylabel('Energie des EM-Feldes W in J')
 
 % Zeitliche Änderung der Energie (Leistung)
-% leistungSystem = 
-% figure(4); clf;
-% hold on
-% plot(2*dt:dt:dt*(steps-1), leistungSystem)
-% plot(dt:dt:dt*steps, leistungQuelle, 'r')
-% hold off
-% legend('Leistung System', 'Leistung Quelle')
-% xlabel('t in s')
-% ylabel('Leistung P in W')
+leistungSystem = diff(energy) / dt;
+figure(4); clf;
+hold on
+% TODO: Zeitschritt und steps-1
+plot(2*dt:dt:dt*(steps), leistungSystem)
+plot(dt:dt:dt*steps, leistungQuelle, 'r')
+hold off
+legend('Leistung System', 'Leistung Quelle')
+xlabel('t in s')
+ylabel('Leistung P in W')
