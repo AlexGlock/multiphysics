@@ -95,19 +95,27 @@ end
 %% Experimentelle Bestimmung mithilfe der Energie des Systems
 
 % Parameter der Zeitsimulation
-% sigma = 
-% dt = 
-% tend = 
-% steps = 
+sigma = 6*10^(-10);
+dt = 1*10^(-13);
+tend = 2*sigma;
+steps = ceil(tend/dt)+1;
 sourcetype= 1;  % 1: Gauss Anregung, 2: Harmonisch, 3: Konstante Anregung
 
 % Anregung jsbow als anonyme Funktion, die einen 3*np Vektor zurückgibt
 % Anregung wird später in Schleife für t>2*sigma_gauss abgeschnitten, also null gesetzt
 jsbow_space = zeros(3*np, 1);
-% jsbow_space(...) = ...
+x_L = ceil(nx/2);
+y_L = ceil(ny/2);
+
+for k = 1:1:nz
+    n = 1 + x_L*Mx + y_L*My + (k-1)*Mz + 2*np;
+    jsbow_space(n) = 1;  
+end
+
+jmax = 1;
 
 % Gauss Anregung
-% jsbow_gauss = @(t)(jsbow_space * ...);
+jsbow_gauss = @(t)(jsbow_space * jmax * exp(-4*((t-sigma)/sigma)^2));
 
 % Harmonische Anregung (optional)
 % jsbow_harm = @(t)(jsbow_space * ...);
@@ -129,7 +137,7 @@ draw_only_every = 4;
 % Zeitintegration
 for ii = 1:steps
     % Zeitpunkt berechnen
-    % t = 
+    t = (ii-1)*dt;
 
     % alte Werte speichern
     ebow_old = ebow_new;
@@ -169,8 +177,8 @@ for ii = 1:steps
     end
 
     % Gesamtenergie und Quellenenergie für diesen Zeitschritt berechnen
-    % energy_t = 
-    % leistungQuelle_t = 
+    energy_t = 0.5 * (ebow_new' * Meps*ebow_new + hbow_new' * Mmu * hbow_new);
+    leistungQuelle_t = energy_t/dt;
 
     % Energiewerte speichern
     energy(ii) =  energy_t;
