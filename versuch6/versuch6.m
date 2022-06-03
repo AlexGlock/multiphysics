@@ -99,7 +99,7 @@ sigma = 6e-10;
 dt = 1e-11;
 tend = 2*sigma;
 steps = floor(tend/dt);
-sourcetype= 1;  % 1: Gauss Anregung, 2: Harmonisch, 3: Konstante Anregung
+sourcetype= 2;  % 1: Gauss Anregung, 2: Harmonisch, 3: Konstante Anregung
 
 % Anregung jsbow als anonyme Funktion, die einen 3*np Vektor zurückgibt
 % Anregung wird später in Schleife für t>2*sigma_gauss abgeschnitten, also null gesetzt
@@ -118,10 +118,11 @@ jmax = 1;
 jsbow_gauss = @(t)(jsbow_space * jmax * exp(-4*((t-sigma)/sigma)^2));
 
 % Harmonische Anregung (optional)
-% jsbow_harm = @(t)(jsbow_space * ...);
+f = 1e10;
+jsbow_harm = @(t)(jsbow_space * jmax * sin(2*pi*f*t));
 
 % Konstante Anregung (optional, für t>0)
-% jsbow_const = @(t)(jsbow_space * ...);
+jsbow_const = @(t)(jsbow_space * jmax);
 
 % Initialisierungen
 ebow_new = sparse(3*np,1);
