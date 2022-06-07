@@ -1,9 +1,9 @@
 % Versuch 6
 
 %% Gitter erstellen (nicht mesh nennen, da dies ein Matlab-Befehl ist)
-gitter_1 = true;
+gitter_1 = false;
 gitter_2 = false;
-gitter_3 = false;
+gitter_3 = true;
 
 if gitter_1 == true
     nx = 11;
@@ -99,7 +99,7 @@ sigma = 6e-10;
 dt = 1e-11;
 tend = 2*sigma;
 steps = floor(tend/dt);
-sourcetype= 2;  % 1: Gauss Anregung, 2: Harmonisch, 3: Konstante Anregung
+sourcetype= 1;  % 1: Gauss Anregung, 2: Harmonisch, 3: Konstante Anregung
 
 % Anregung jsbow als anonyme Funktion, die einen 3*np Vektor zurückgibt
 % Anregung wird später in Schleife für t>2*sigma_gauss abgeschnitten, also null gesetzt
