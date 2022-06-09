@@ -1,6 +1,6 @@
 %%% choose inhomogen or homogen
-material_option = 'homogen';
-%material_option = 'inhomogen';
+%material_option = 'homogen';
+material_option = 'inhomogen';
 
 % load material data and curl matrix C
 load material_data
@@ -37,7 +37,7 @@ tend = steps * dt;
 time = 0:dt:tend;
 
 % excitation parameter (choose 'Gauss', 'Trapez' or 'Sinusoidal')
-signalShape = 'Gauss';
+signalShape = 'Sinusoidal';
 distributed = true; % choose true or false
 trise = 0.5e-9; 
 thold = 0.7e-9; 
