@@ -1,7 +1,7 @@
 function [ jvalue ] = trapez_pulse(time, trise, thold, tfall)
 
 % number of time points
-% nt = 
+nt = size(time);
 
 t1 = trise;
 t2 = trise + thold;
