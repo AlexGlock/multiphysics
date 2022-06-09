@@ -1,7 +1,7 @@
 function [ jvalue ] = trapez_pulse(time, trise, thold, tfall)
 
 % number of time points
-% nt = 
+nt = size(time);
 
 t1 = trise;
 t2 = trise + thold;
@@ -13,13 +13,14 @@ jvalue = zeros(1,nt);
 for k = 1:nt
     t = time(k);
     if (0 <= t && t < t1)
-        % jvalue(k) =
+        jvalue(k) = t/t1;
     elseif (t1 <= t && t < t2)
-        % jvalue(k) =
+        jvalue(k) = 1;
     elseif ( t2 <= t && t < t3)
-        % jvalue(k) = 
+        jvalue(k) = (t-t3)/(t2-t3); 
     else
-        % jvalue(k) = 
+        jvalue(k) = 0;
+    end
 end
 
 end
