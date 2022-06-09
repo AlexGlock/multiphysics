@@ -1,9 +1,9 @@
 % Versuch 6
 
 %% Gitter erstellen (nicht mesh nennen, da dies ein Matlab-Befehl ist)
-gitter_1 = true;
+gitter_1 = false;
 gitter_2 = false;
-gitter_3 = false;
+gitter_3 = true;
 
 if gitter_1 == true
     nx = 11;
@@ -97,9 +97,9 @@ end
 % Parameter der Zeitsimulation
 sigma = 6e-10;
 dt = 1e-11;
-tend = 2*sigma;
+tend = 3*sigma;
 steps = floor(tend/dt);
-sourcetype= 2;  % 1: Gauss Anregung, 2: Harmonisch, 3: Konstante Anregung
+sourcetype= 1;  % 1: Gauss Anregung, 2: Harmonisch, 3: Konstante Anregung
 
 % Anregung jsbow als anonyme Funktion, die einen 3*np Vektor zurückgibt
 % Anregung wird später in Schleife für t>2*sigma_gauss abgeschnitten, also null gesetzt
@@ -118,7 +118,7 @@ jmax = 1;
 jsbow_gauss = @(t)(jsbow_space * jmax * exp(-4*((t-sigma)/sigma)^2));
 
 % Harmonische Anregung (optional)
-f = 1e10;
+f = 1e9;
 jsbow_harm = @(t)(jsbow_space * jmax * sin(2*pi*f*t));
 
 % Konstante Anregung (optional, für t>0)
