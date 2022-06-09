@@ -31,18 +31,18 @@ assert(np==length(Mmui)/3)
 % -------------------------------------------------------------------------
 
 % simulation in time domain, nts time steps of size dt
-% tend = 
-% dt = 
-% time = 
+tend = 1.7e-9;
+dt = tend/1000; 
+time = @(dt,nts)(dt*nts);
 
 % excitation parameter (choose 'Gauss', 'Trapez' or 'Sinusoidal')
 signalShape = 'Trapez';
 distributed = false; % choose true or false
-% trise = 
-% thold = 
-% tfall = 
-% fmax_gauss = 
-% f_sin = 
+trise = 0.5e-9; 
+thold = 0.7e-9; 
+tfall = 0.5e-9;
+fmax_gauss = 1e9;
+f_sin = 1e6;
 
 % define which edge shall be excited and plotted
 idxEdge2excite = 5; % if distributed == false
