@@ -1,6 +1,6 @@
 %%% choose inhomogen or homogen
-%material_option = 'homogen';
-material_option = 'inhomogen';
+material_option = 'homogen';
+%material_option = 'inhomogen';
 
 % load material data and curl matrix C
 load material_data
@@ -32,12 +32,12 @@ assert(np==length(Mmui)/3)
 
 % simulation in time domain, nts time steps of size dt
 dt = 2e-11; 
-steps = 1000;
+steps = 500;
 tend = steps * dt; 
 time = 0:dt:tend;
 
 % excitation parameter (choose 'Gauss', 'Trapez' or 'Sinusoidal')
-signalShape = 'Sinusoidal';
+signalShape = 'Trapez';
 distributed = true; % choose true or false
 trise = 0.5e-9; 
 thold = 0.7e-9; 
@@ -88,7 +88,7 @@ ylabel('Stromanregung in A');
 j_matrix = zeros(3*np,length(time));
 if distributed
     % set j in a way that the current is distributed over the entire port face
-    j_matrix(idxEdgeDistributed,:) = [j_time;j_time;-j_time;-j_time;j_time;j_time;-j_time;-j_time] / 8;
+    j_matrix(idxEdgeDistributed,:) = [j_time;-j_time;j_time;-j_time;j_time;j_time;-j_time;-j_time] / 8;
 else
     % set j in a way that one edge in the port face is excited by the entire current
     j_matrix(idxEdge2excite,:) = j_time;
