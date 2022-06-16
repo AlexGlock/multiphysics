@@ -132,7 +132,8 @@ leistungQuelle = zeros(1,steps);
 
 % Plot parameter für "movie"
 figure(1)
-zlimit = 30/(delta_x(1));
+%zlimit = 30/(delta_x(1));
+zlimit = 700;
 draw_only_every = 4;
 
 % Zeitintegration
