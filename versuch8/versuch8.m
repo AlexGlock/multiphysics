@@ -1,6 +1,6 @@
 %% Wähle inhomogen oder homogen
-material_option = 'homogen';
-% material_option = 'inhomogen';
+% material_option = 'homogen';
+material_option = 'inhomogen';
 
 %% Materialdaten und rot-Operator der Leitung laden
 if strcmp( material_option, 'homogen' )
@@ -39,7 +39,7 @@ time = 0:dt:(nts*dt);
 fmax = 1e9;
 
 % Sampling-Frequenz der Zeitdiskretisierung
-%Fs =
+Fs = 1/dt;
 fprintf('Sampling-Frequenz: %d Hz\n',Fs);
 
 % index used for current and voltage measurements
@@ -64,10 +64,10 @@ for k=2:nts
     [hbow,ebow] = leapfrog(hbow, ebow, je(:,k), Mmui, Meps, C, Rmat, dt);
 
     % Spannung und Strom für Ein- und Ausgang
-%    U1(k) =
-%    I1(k) =
-%    U2(k) =
-%    I2(k) =
+   U1(k) = ebow(idx2measure);
+   I1(k) = -je(idx2measure,k)*8 - U1(k)/R;
+   U2(k) = ebow(idx2measure + 150*Mz);
+   I2(k) = -U2(k)/R;
 
 end
 time_TD = toc;
@@ -101,10 +101,10 @@ title('Ausgangsstrom im Zeitbereich')
 %% Transformation in den Frequenzbereich zur Auswertung der Impedanz
 
 % Anzahl an Samples Ns, zero-padding zp, Anzahl an Samples für fft N und maximale zu plottende Frequenz fmax2plot
-%Ns =
-%zp =
-%N =
-%fmax2plot =
+Ns = 1000;
+N = 2^(ceil(log2(Ns)));
+zp = N - Ns;
+fmax2plot = 10e6;
 
 % Transformation der Eingangsgrößen
 [U1_fft,freq]=fftmod(U1,N,Fs);
@@ -148,8 +148,10 @@ xlim([0 2*fmax]);
 %% Darstellung der Ein-/Ausgangsimpedanz im Frequenzbereich
 
 % Berechnung Ein- und Ausgangsimpedanz im Frequenzbereich
-%Z1_fft=
-%Z2_fft=
+je_vec = -full(je(idx2measure,:)*8);
+Js_fft = fftmod(je_vec,N,Fs);
+Z1_fft=U1_fft./(I1_fft - Js_fft);
+Z2_fft=U2_fft./I2_fft;
 
 figure(3);
 plot(freq,abs(Z1_fft),'k-');
@@ -170,16 +172,16 @@ ylim([45 55]);
 
 %% Auswertung Wellengrößen
 
-%Zwsqrt =
+Zwsqrt = sqrt(R);
 
-%a1 =
-%b1 =
-%b2 =
+a1 = 0.5 * (U1_fft/Zwsqrt + I1_fft*Zwsqrt);
+b1 = 0.5 * (U1_fft/Zwsqrt - I1_fft*Zwsqrt);
+b2 = 0.5 * (U2_fft/Zwsqrt - I2_fft*Zwsqrt);
 %
-%S11 =
-%S21 =
+S11 = b1./a1;
+S21 = b2./a1;
 %
-%energy =
+energy = abs(S11).^2 + abs(S21).^2;
 
 % Darstellung Energie und Wellengrößen
 figure(5);

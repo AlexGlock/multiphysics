@@ -12,13 +12,13 @@ function [Y,freq]=fftmod(y,N,Fs)
 %   freq    Frequenzachse
 
 % max. darstellbare Frequenz (Abtast-Theorem)
-%fmax =
+fmax = Fs/2;
 
 % Frequenzabstand bestimmen
-%df =
+df = Fs/N;
 
 % Frequenzpunkte (x-Achse des Spektrums) bis fmax bestimmen
-%freq =
+freq = 0:df:fmax;
 
 % Spektrum mithilfe der fft bestimmen
 spectrum = fft(y,N);
