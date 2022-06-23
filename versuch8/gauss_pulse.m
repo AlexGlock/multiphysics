@@ -10,10 +10,10 @@ jvalue = exp(-tm.^2 / (2*sigma^2));
 j = sparse(3*np,length(t));
 if distributed
 	% set j in a way that the current is distributed over the entire port face
-    XfacesMinus = [7,11];
-    YfacesMinus = [10,11]+np;
-    XfacesPlus = [5,9];
-    YfacesPlus = [2,3]+np;
+    XfacesMinus = [5,9];
+    YfacesMinus = [2,3]+np;
+    XfacesPlus = [7,11];
+    YfacesPlus = [10,11]+np;
     j(XfacesPlus,:) = [jvalue/8; jvalue/8];
     j(XfacesMinus,:) = -[jvalue/8; jvalue/8];
     j(YfacesPlus,:) = [jvalue/8; jvalue/8];
