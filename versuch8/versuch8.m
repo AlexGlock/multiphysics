@@ -1,6 +1,6 @@
 %% Wähle inhomogen oder homogen
-% material_option = 'homogen';
-material_option = 'inhomogen';
+material_option = 'homogen';
+% material_option = 'inhomogen';
 
 %% Materialdaten und rot-Operator der Leitung laden
 if strcmp( material_option, 'homogen' )
@@ -199,7 +199,7 @@ xlim([0 fmax2plot]);
 omega = 2*pi*1e9;
 
 % System matrix
-% AF = 
+AF = C'*Mmui*C - omega^2*Meps + 1i*omega*nullInv(Rmat);
 
 % Source current (make sure it is divergence free)
 jbowF                = sparse(size(AF, 1), 1);
@@ -209,7 +209,7 @@ jbowF([10,11]+np, :) =  [1/8; 1/8];
 jbowF([ 2, 3]+np, :) = -[1/8; 1/8];
 
 % Right hand side
-% rhsF = ;
+rhsF = -1i*omega*jbowF;
 
 % Linear systems resulting from FD wave problems
 % are hard to solve with an iterative solver.
@@ -226,8 +226,10 @@ jbowF([ 2, 3]+np, :) = -[1/8; 1/8];
 
 % Eliminate known values of ebow from AF and rhsF
 
-% AF_reduced   = ; % keep only true unknowns
-% rhsF_reduced = ;               
+idx0 = find(diag(Meps)==0);
+idx = setdiff(1:3*np, idx0);
+AF_reduced = AF(idx,idx); % keep only true unknowns
+rhsF_reduced = rhsF(idx);               
 
 % Solve and keep track of timing
 % NB: * 'backslash' should trigger an LU factorization,
@@ -237,18 +239,18 @@ ebowF_reduced  = AF_reduced\rhsF_reduced;
 time_FD = toc;
 
 % Recover ebow for all edges
-% ebowF = sparse();
-% ebowF() = ;
+ebowF = sparse(max(size(AF)));
+ebowF(idx) = ebowF_reduced;
 
 % As a quick validation, let us plot the voltage along the waveguide,
 % as we did in lab 7
-% idxEdge2plot = 5;
-% u_lineF = ebowF(idxEdge2plot:Mz:idxEdge2plot+(nz-1)*Mz);
-% figure;
-% plot();
-% title();
-% xlabel();
-% ylabel();
+idxEdge2plot = 5;
+u_lineF = ebowF(idxEdge2plot:Mz:idxEdge2plot+(nz-1)*Mz);
+figure;
+plot(0:length(u_lineF)-1, u_lineF);
+title("Spannung entlang des Wellenleiters");
+xlabel("Position entlang des Leiters in cm");
+ylabel("Spannung in V");
 
 % Display timings
 % * Ask yourself, does the comparison make sense?
