@@ -150,7 +150,7 @@ xlim([0 2*fmax]);
 % Berechnung Ein- und Ausgangsimpedanz im Frequenzbereich
 je_vec = -full(je(idx2measure,:)*8);
 Js_fft = fftmod(je_vec,N,Fs);
-Z1_fft=U1_fft./(I1_fft - Js_fft);
+Z1_fft=U1_fft./(-I1_fft + Js_fft);
 Z2_fft=U2_fft./I2_fft;
 
 figure(3);
