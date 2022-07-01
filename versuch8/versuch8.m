@@ -97,11 +97,14 @@ xlabel('Zeit in s')
 ylabel('I_2 in V')
 title('Ausgangsstrom im Zeitbereich')
 
+set(1,'papersize',[14,12])
+print -dpdf voltage_current_time_domain.pdf
+
 
 %% Transformation in den Frequenzbereich zur Auswertung der Impedanz
 
 % Anzahl an Samples Ns, zero-padding zp, Anzahl an Samples für fft N und maximale zu plottende Frequenz fmax2plot
-Ns = 1000;
+Ns = nts;
 N = 2^(ceil(log2(Ns)));
 zp = N - Ns;
 fmax2plot = 10e6;
@@ -143,6 +146,9 @@ xlabel('Frequenz in Hz')
 ylabel('I_2 in V')
 title('Ausgangsstrom im Frequenzbereich')
 xlim([0 2*fmax]);
+
+set(2,'papersize',[14,12])
+print -dpdf voltage_current_freq_domain.pdf
 
 
 %% Darstellung der Ein-/Ausgangsimpedanz im Frequenzbereich
