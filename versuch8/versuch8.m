@@ -1,6 +1,6 @@
 %% Wähle inhomogen oder homogen
-material_option = 'homogen';
-% material_option = 'inhomogen';
+% material_option = 'homogen';
+material_option = 'inhomogen';
 
 %% Materialdaten und rot-Operator der Leitung laden
 if strcmp( material_option, 'homogen' )
@@ -98,7 +98,7 @@ ylabel('I_2 in V')
 title('Ausgangsstrom im Zeitbereich')
 
 set(1,'papersize',[14,12])
-print -dpdf voltage_current_time_domain.pdf
+print -dpdf voltage_current_time_domain_inh.pdf
 
 
 %% Transformation in den Frequenzbereich zur Auswertung der Impedanz
@@ -116,6 +116,11 @@ I1_fft=fftmod(I1,N,Fs);
 % Transformation der Ausgangsgrößen
 U2_fft=fftmod(U2,N,Fs);
 I2_fft=fftmod(I2,N,Fs);
+
+%arr = abs(U1_fft);
+%a = arr(1)
+%b = arr(45)
+%b/a*100
 
 % Darstellung der Spannungen und Ströme an Ein-/Ausgang im Frequenzbereich
 figure(2)
@@ -148,7 +153,7 @@ title('Ausgangsstrom im Frequenzbereich')
 xlim([0 2*fmax]);
 
 set(2,'papersize',[14,12])
-print -dpdf voltage_current_freq_domain.pdf
+print -dpdf voltage_current_freq_domain_inh.pdf
 
 
 %% Darstellung der Ein-/Ausgangsimpedanz im Frequenzbereich
