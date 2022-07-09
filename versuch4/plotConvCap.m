@@ -29,7 +29,9 @@ for i = 1:length(stuetzstellen)
     boxesEps(1).box = [1, msh.nx, 1, msh.ny, 1, msh.nz];
     boxesEps(1).value = 1;
 
-    eps = boxMesher(msh, boxesEps, defaultvalue);
+    eps0 = 8.854187817*10^-12;
+    eps_r = boxMesher(msh, boxesEps, defaultvalue);
+    eps = eps_r * eps0;
 
     % Erstellen des Potentialvektors mit den eingeprägten Potentialen (auch mit boxMesher)
     %
