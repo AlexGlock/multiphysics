@@ -166,5 +166,6 @@ end
     
 % Matrix Deps mithilfe des Diagonalenvektors (spdiags) erzeugen
 Deps = spdiags([meanEpsX; meanEpsY; meanEpsZ], 0, 3*np, 3*np);
+spy(Deps)
     
 end

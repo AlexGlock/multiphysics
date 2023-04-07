@@ -10,7 +10,7 @@
 
 % Parameter setzen
 nd=20;
-h=1;
+h=1.5;
 r=1;
 
 % Berechnung von delta phi
@@ -51,8 +51,8 @@ for i=1:nd
     YDeckel(2,i) = sin(delphi*(i-1));
     YDeckel(3,i) = sin(delphi*i);
     
-    ZDeckel = ones(3, nd);
-
+    %ZDeckel = ones(3, nd);
+    ZDeckel(ones(3, nd)==1)=h;
     
     % Eintrag i in XBoden, YBoden, ZBoden
     
@@ -65,7 +65,7 @@ for i=1:nd
     YBoden(3,i) = sin(delphi*i);
     
     ZBoden = zeros(3, nd);
-
+    
     
     % Eintrag i in XMantel1, YMantel1, ZMantel1 
     
@@ -78,7 +78,7 @@ for i=1:nd
     YMantel1(3,i) = sin(delphi*i);
     
     ZMantel1(1,i) = 0;
-    ZMantel1(2,i) = 1;
+    ZMantel1(2,i) = h;
     ZMantel1(3,i) = 0;
 
     
@@ -92,8 +92,8 @@ for i=1:nd
     YMantel2(2,i) = sin(delphi*i);
     YMantel2(3,i) = sin(delphi*i);
 
-    ZMantel2(1,i) = 1;
-    ZMantel2(2,i) = 1;
+    ZMantel2(1,i) = h;
+    ZMantel2(2,i) = h;
     ZMantel2(3,i) = 0;
     
 end

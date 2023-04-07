@@ -2,8 +2,8 @@
 
 %% Gitter erstellen (nicht mesh nennen, da dies ein Matlab-Befehl ist)
 gitter_1 = false;
-gitter_2 = false;
-gitter_3 = true;
+gitter_2 = true;
+gitter_3 = false;
 
 if gitter_1 == true
     nx = 11;
@@ -180,8 +180,11 @@ for ii = 1:steps
     end
 
     % Gesamtenergie und Quellenenergie für diesen Zeitschritt berechnen
-    energy_t = 0.5 * (ebow_new' * Meps*ebow_new + hbow_new' * Mmu * hbow_new);
-    leistungQuelle_t = ebow_new' * js;
+    ebow_avrg = 0.5 * (ebow_new + ebow_old);
+    %energy_t = 0.5 * (ebow_new' * Meps*ebow_new + hbow_new' * Mmu * hbow_new);
+    %leistungQuelle_t = ebow_new' * js;
+    energy_t = 0.5 * (ebow_avrg' * Meps*ebow_avrg + hbow_new' * Mmu * hbow_new);
+    leistungQuelle_t = ebow_avrg' * js;
 
     % Energiewerte speichern
     energy(ii) =  energy_t;

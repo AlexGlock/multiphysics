@@ -95,7 +95,7 @@ print -dpdf plotConv.pdf
 % Plot für den relativen Wellenzahlfehler über Gitterschrittweite (loglog)
 figure(2)
 
-loglog(nOrd2, errOrd2bc0, nOrd4, errOrd4bc0, nOrd2, errOrd2bc1, nOrd4, errOrd4bc1)
+loglog(L./(nOrd2-1), errOrd2bc0, L./(nOrd4-1), errOrd4bc0, L./(nOrd2-1), errOrd2bc1, L./(nOrd4-1), errOrd4bc1)
 
 legend({'zweite Ordnung ohne Randbed.','vierte Ordnung ohne Randbed.',...
         'zweite Ordnung mit Randbed.','vierte Ordnung mit Randbed.'

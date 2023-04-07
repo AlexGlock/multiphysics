@@ -33,4 +33,5 @@ c = [Z -Pz Py;
     -Py Px Z];
 s = [Px Py Pz];
 st = [-Px' -Py' -Pz'];
+spy(Py)
 end

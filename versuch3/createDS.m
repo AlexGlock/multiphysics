@@ -22,7 +22,7 @@ np = msh.np;
 % geschickt verwenden können. Achten Sie auch auf die Geisterkanten
 
 % Gitterabstände/Schrittweiten entlang der x-Achse
-dx = [diff(msh.xmesh), 0];
+dx = [diff(msh.xmesh), 0]
 
 % Gitterabstände/Schrittweiten entlang der y-Achse
 dy = [diff(msh.ymesh), 0];
@@ -41,7 +41,7 @@ DSdiag = [repmat(dx, 1, ny*nz), ...
 % aus dem Diagonalvektor für DS die matrix erstellen (Befehl spdiags verwenden)
 DS = spdiags(DSdiag',0,3*np,3*np);
 
-
+spy(DS)
 %% Das Gleiche nochmal für die Matrix DSt
 
 % Gitterabstände/Schrittweiten entlang der x-Achse
