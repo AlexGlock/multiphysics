@@ -1,16 +1,19 @@
+                            
+# Multiphysics Code
 
+This repo contains matlab code for multiphysics simulations. The folder ``electro-thermal`` contains an example for the Cell method coupling of stationary currents and
+thermal propagation.
 
-    __      __       _____  ______   _____ 
-    \ \    / / /\   |  __ \|  ____| |_   _|
-     \ \  / / /  \  | |  | | |__      | |  
-      \ \/ / / /\ \ | |  | |  __|     | |  
-       \  / / ____ \| |__| | |       _| |_ 
-        \/ /_/    \_\_____/|_|      |_____|
-                                      
-                                      
-## Code aus Verfahren und Anwendungen der Feldsimulation (Softwarepraktikum)
+## Electro-Thermal
 
+Calculation of the electric scalar Potential:
 
-Innerhalb des Praktikums wurde eine "Finite Integration Technique"-Solver für Elektromagnetische Feldberechnungen in Matlab aufgebaut.
+<img src="pictures/potential.png" alt="" width=500 height=500> 
 
-Das Repository besteht aus den dabei bearbeiteten 8 Versuchen.
+and the stationary current densities:
+
+<img src="pictures/current.png" alt="" width=500 height=500>
+
+Coupling via power loss in the dual grid cells yields the thermal solution:
+
+<img src="pictures/thermal.png" alt="" width=500 height=500>
