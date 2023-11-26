@@ -2,14 +2,14 @@
 
 clearvars;
 % Quellparameter
-src_potential = 1;             % [V]
-src_width = 18;                 % in cells
-src_height = 1;
+src_potential = 10;             % [V]
 
 % Material in in Leiterstreifen (Kupfer)
 cond_kappa = 5.8e7;             % [S/m] 
-cond_lambda = 400.0;            % [W/mK] 
+cond_lambda = 390.0;            % [W/mK] 
 cond_epsilon = 1.9*8.85e-12;    % [F/m]
+
+diameter = 2; % integer cell count
 
 
 %% --- MESH ---------------------------------------------------------------
@@ -17,11 +17,11 @@ cond_epsilon = 1.9*8.85e-12;    % [F/m]
 % Randbedingungen
 bc = [0,0,0,0,0,0];
 
-xmesh = linspace(-1,1,30);
-ymesh = linspace(-1,1,30);
-zmesh = linspace(0,1,3);
+xmesh = linspace(-1,1,65);
+ymesh = linspace(-1,1,65);
+zmesh = linspace(0,1,2);
 msh = cartMesh(xmesh, ymesh, zmesh);
-[kappa, lambda, epsilon, temps, pots] = createBoxes(msh, cond_kappa, cond_lambda, cond_epsilon, src_potential, src_width, src_height);
+[kappa, lambda, epsilon, temps, pots] = createBoxes(msh, cond_kappa, cond_lambda, cond_epsilon, src_potential, diameter);
 
 %% --- Topologie und Material Matrizen ------------------------------------
 
@@ -34,11 +34,11 @@ Meps = createMeps(msh, ds, da, dat, epsilon, bc);
 Mkap = createMeps(msh, ds, da, dat, kappa, bc);
 Mlam = createMeps(msh, ds, da, dat, lambda, bc); 
 
-%% --- E-Statik und J-Statik lösen ----------------------------------------
+%% --- J-Statik lösen -----------------------------------------------------
 
-% Berechnung Systemmatrix: div(eps*grad(phi)) = 0
+% Berechnung Systemmatrix: div(kap*grad(phi)) = 0
 q = zeros(msh.np,1);
-A = st*Meps*st';
+A = st*Mkap*st';
 % Modifikation Systemmatrix und Ladungsvektor mit modPots
 [A, q] = modPots(A, q, pots);
 % Gleichungssystem lösen mit gmres(20)
@@ -79,13 +79,13 @@ theta(idx) = y;
 plotPotential(msh, phi, 1);
 title("eletrisches Potential Phi");
 
-figure()
-plotEdgeVoltage(msh, jbow, 1, bc)
+figure();
+plotEdgeVoltage(msh, jbow, 1, bc);
 title("stationäres Strömungsfeld J");
 
 figure();
 [X,Y] = meshgrid(msh.xmesh, msh.ymesh);
-theta_surf = reshape(theta(1:msh.nx*msh.ny), [msh.nx, msh.ny]);
+theta_surf = reshape(theta(1:msh.nx*msh.ny)+1, [msh.nx, msh.ny]);
 surf(X,Y,theta_surf');
 colormap('hot');
 view(0,90);
