@@ -6,6 +6,8 @@ thermal propagation.
 
 ## Electro-Thermal
 
+# The electromagnetic solution first
+
 Calculation of the electric scalar Potential:
 
 <img src="pictures/potential.png" alt="" width=500 height=500> 
@@ -14,6 +16,14 @@ and the stationary current densities:
 
 <img src="pictures/current.png" alt="" width=500 height=500>
 
-Coupling via power loss in the dual grid cells yields the thermal solution:
+# Thermal coupling
+
+Coupling via power loss over the primal-edges/dual-surfaces:
+
+<img src="pictures/power.png" alt="" width=500 height=500>
+
+Solving the thermal problem with powerloss as right hand side
 
 <img src="pictures/thermal.png" alt="" width=500 height=500>
+
+ToDo: find error in thermal system ...

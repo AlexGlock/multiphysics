@@ -9,7 +9,7 @@ cond_kappa = 5.8e7;             % [S/m]
 cond_lambda = 390.0;            % [W/mK] 
 cond_epsilon = 1.9*8.85e-12;    % [F/m]
 
-diameter = 3; % integer cell count
+diameter = 2; % integer cell count
 
 
 %% --- MESH ---------------------------------------------------------------
@@ -17,8 +17,8 @@ diameter = 3; % integer cell count
 % Randbedingungen
 bc = [0,0,0,0,0,0];
 
-xmesh = linspace(-1,1,55);
-ymesh = linspace(-1,1,55);
+xmesh = linspace(-1,1,25);
+ymesh = linspace(-1,1,25);
 zmesh = linspace(0,1,2);
 msh = cartMesh(xmesh, ymesh, zmesh);
 [kappa, lambda, epsilon, temps, pots] = createBoxes(msh, cond_kappa, cond_lambda, cond_epsilon, src_potential, diameter);
@@ -53,14 +53,15 @@ dbow = Meps*ebow;
 jbow = Mkap*ebow;
 
 plotPotential(msh, phi, 1);
-title("eletrisches Potential \phi");
+title("eletrisches Potential");
 
-%% --- Kopplungsgröße Verlustleistung -------------------------------------
+%% --- Kopplungsgröße Leistung --------------------------------------------
 
 % elektrische Leistung in den dualen Volumen (Tonti)
-p_el = ebow.*jbow; % diag(ebow)*Mkap*st'*phi;
+p_el = ebow.*jbow;
 p_vol = abs(st).*0.5*p_el;
 
+figure();
 plotPotential(msh, p_vol, 1);
 title("Volumenverlustleistung P_{vol}");
 
@@ -90,6 +91,6 @@ theta_surf = reshape(theta(1:msh.nx*msh.ny)+1, [msh.nx, msh.ny]);
 surf(X,Y,theta_surf');
 colormap('hot');
 view(0,90);
-title("Wärmeverteilung \theta");
+title("Wärmeverteilung Theta");
 
 
