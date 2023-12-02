@@ -2,8 +2,9 @@
 function [kappaBox, lambdaBox, epsBox, tempBox, potBox] = createBoxes(msh, kappa, lambda, epsilon, potential, diameter)
 
 disp('erstelle Verteilungen mit Box Mesher')
-lambda_air = 0.026;
-temp_air = 0;
+lambda_air = 0.025/(1.225*1.005);
+kappa_air = 1e-11;
+temp_air = 20;
 eps0 = 8.85e-12;
 
 if ceil(diameter) < 1
@@ -22,9 +23,9 @@ inner_width = msh.nx - 2*outer_width;
 % --- Creating kappa Distribution -----------------------------------------
 
 boxeskappa(1).box = [1, outer_width+inner_width, outer_height, msh.ny, 1, msh.nz];
-boxeskappa(1).value = 0; 
+boxeskappa(1).value = kappa_air; 
 boxeskappa(2).box = [outer_width, msh.nx, 1, msh.ny-outer_height, 1, msh.nz];
-boxeskappa(2).value = 0;
+boxeskappa(2).value = kappa_air;
 defaultkappa = kappa;
 kappaBox = boxMesher(msh, boxeskappa, defaultkappa);
 
@@ -53,10 +54,12 @@ defaultpot = NaN;
 potBox = boxMesher(msh, boxespot, defaultpot);
 
 % --- Creating initial heat Distribution ----------------------------------
-boxestemp(1).box = [1, outer_width+inner_width+1, outer_height, msh.ny, 1, msh.nz];
-boxestemp(1).value = temp_air; 
-boxestemp(2).box = [outer_width, msh.nx, 1, msh.ny-outer_height+1, 1, msh.nz];
-boxestemp(2).value = temp_air;
+boxestemp(1).box = [1, msh.nx, 1, msh.ny, 1, msh.nz];
+boxestemp(1).value = NaN; 
+%boxestemp(1).box = [1, outer_width+inner_width+1, outer_height, msh.ny, 1, msh.nz];
+%boxestemp(1).value = temp_air; 
+%boxestemp(2).box = [outer_width, msh.nx, 1, msh.ny-outer_height+1, 1, msh.nz];
+%boxestemp(2).value = temp_air;
 defaulttemp = NaN;
 tempBox = boxMesher(msh, boxestemp, defaulttemp);
 

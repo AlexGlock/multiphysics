@@ -1,15 +1,16 @@
-%% BEISPIEL von gekoppeltes J-Statik und Thermisches Problem
+%% BEISPIEL von gekoppeltem J-Statik und thermischem Problem
 
 clearvars;
 % Quellparameter
-src_potential = 10;             % [V]
+src_potential = 1e-5;           % [V]
 
 % Material in in Leiterstreifen (Kupfer)
-cond_kappa = 5.8e7;             % [S/m] 
-cond_lambda = 390.0;            % [W/mK] 
+cond_kappa = 58e6;              % [S/m] 
+cond_lambda = 399/(8920*0.383); % [m^2/s] lambda/(dichte*spezW)
 cond_epsilon = 1.9*8.85e-12;    % [F/m]
 
-diameter = 3; % integer cell count
+% Leiter Durchmesser an der dünnsten Stelle (min 1)
+diameter = 2; % integer cell count
 
 
 %% --- MESH ---------------------------------------------------------------
@@ -17,8 +18,8 @@ diameter = 3; % integer cell count
 % Randbedingungen
 bc = [0,0,0,0,0,0];
 
-xmesh = linspace(-1,1,55);
-ymesh = linspace(-1,1,55);
+xmesh = linspace(-1,1,45);
+ymesh = linspace(-1,1,45);
 zmesh = linspace(0,1,2);
 msh = cartMesh(xmesh, ymesh, zmesh);
 [kappa, lambda, epsilon, temps, pots] = createBoxes(msh, cond_kappa, cond_lambda, cond_epsilon, src_potential, diameter);
@@ -63,6 +64,7 @@ p_vol = abs(st).*0.5*p_el;
 
 plotPotential(msh, p_vol, 1);
 title("Volumenverlustleistung P_{vol}");
+colormap("jet")
 
 %% --- Thermisches Problem lösen ------------------------------------------
 
