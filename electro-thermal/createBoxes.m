@@ -56,9 +56,9 @@ potBox = boxMesher(msh, boxespot, defaultpot);
 % --- Creating initial heat Distribution ----------------------------------
 boxestemp(1).box = [1, msh.nx, 1, msh.ny, 1, msh.nz];
 boxestemp(1).value = NaN; 
-%boxestemp(1).box = [1, outer_width+inner_width+1, outer_height, msh.ny, 1, msh.nz];
+%boxestemp(1).box = [1, outer_width+inner_width-1, outer_height+1, msh.ny, 1, msh.nz];
 %boxestemp(1).value = temp_air; 
-%boxestemp(2).box = [outer_width, msh.nx, 1, msh.ny-outer_height+1, 1, msh.nz];
+%boxestemp(2).box = [outer_width+1, msh.nx, 1, msh.ny-outer_height-1, 1, msh.nz];
 %boxestemp(2).value = temp_air;
 defaulttemp = NaN;
 tempBox = boxMesher(msh, boxestemp, defaulttemp);

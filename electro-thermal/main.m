@@ -2,11 +2,11 @@
 
 clearvars;
 % Quellparameter
-src_potential = 1e-5;           % [V]
+src_potential = 3e-5;           % [V]
 
 % Material in in Leiterstreifen (Kupfer)
 cond_kappa = 58e6;              % [S/m] 
-cond_lambda = 399/(8920*0.383); % [m^2/s] lambda/(dichte*spezW)
+cond_lambda = 399/(8920*0.383); % [m^2/s] lambda/(dichte*spez.W.Kap)
 cond_epsilon = 1.9*8.85e-12;    % [F/m]
 
 % Leiter Durchmesser an der dünnsten Stelle (min 1)
@@ -73,7 +73,7 @@ A = st*Mlam*st';
 % Modifikation Systemmatrix und Ladungsvektor mit modPots
 [A, p_vol] = modPots(A, p_vol, temps);
 % Gleichungssystem lösen mit gmres(20) oder bicgstab
-[y, ~, ~, ~, ~] = gmres(A, p_vol, 20, 1e-13, msh.np);
+[y, ~, ~, ~, ~] = bicgstab(A, p_vol, 1e-13, msh.np);
 % theta aus y bestimmen (eingeprägte temperaturen einfügen)
 idx = isnan(temps);
 theta = temps;
