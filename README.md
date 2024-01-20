@@ -26,4 +26,7 @@ Solving the thermal problem with powerloss as right hand side
 
 <img src="pictures/thermal.png" alt="" width=500 height=500>
 
-ToDo: find error in thermal system ...
+
+# waveform-relaxation
+
+A 1D example for an WR algorithm on a heat dissipation problem.

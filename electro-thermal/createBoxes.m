@@ -2,7 +2,7 @@
 function [kappaBox, lambdaBox, epsBox, tempBox, potBox] = createBoxes(msh, kappa, lambda, epsilon, potential, diameter)
 
 disp('erstelle Verteilungen mit Box Mesher')
-lambda_air = 0.025/(1.225*1.005);
+lambda_air = 0.02/(1.225*1.005);
 kappa_air = 1e-11;
 temp_air = 20;
 eps0 = 8.85e-12;

@@ -18,8 +18,8 @@ diameter = 2; % integer cell count
 % Randbedingungen
 bc = [0,0,0,0,0,0];
 
-xmesh = linspace(-1,1,45);
-ymesh = linspace(-1,1,45);
+xmesh = linspace(-1,1,75);
+ymesh = linspace(-1,1,75);
 zmesh = linspace(0,1,2);
 msh = cartMesh(xmesh, ymesh, zmesh);
 [kappa, lambda, epsilon, temps, pots] = createBoxes(msh, cond_kappa, cond_lambda, cond_epsilon, src_potential, diameter);
