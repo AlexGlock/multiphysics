@@ -1,28 +1,22 @@
 %% waveform relaxation algorithm
 
-%   heat propagatio
+%   1D heat propagation
+%
 %   0 ============== L
 %
-
-%
-%   ^   [S]
-% t |    |     
-%   | D0 | D1
-%   |    |
-%   o----------->
-%       x
+%   heat diffusion:     dUdt = alpha * laplace(u)
 
 % domain
 L = 0.1;          % [m] length
-n = 30;        % node count
+n = 40;        % node count
 
 % timesteps
-t_end = 10;     % [s] duration
-dt = 0.05;       % [s] time step
+t_end = 15;     % [s] duration
+dt = 0.02;       % [s] time step
 
 % boundary conditions u(t,0) & u(t,L)
 U_0 = 90;
-U_L = 0;
+U_L = 20;
 
 % initial condition u(0,x)
 u0 = 0;
@@ -40,25 +34,26 @@ dUdt = zeros(n, 1);     % derivative
 
 % stepping through time
 for j = 1:length(t)
-    % interior space
+    % interior nodes
     for i = 2:n-1
         dUdt(i) = alpha*(-(U(i)-U(i-1))/dx^2+(U(i+1)-U(i))/dx^2);
     end
-    % boundaries
+    % boundary nodes
     dUdt(1) = alpha*(-(U(1)-U_0)/dx^2+(U(2)-U(1))/dx^2);
-    dUdt(n) =alpha*(-(U(n)-U(n-1))/dx^2+(U_L-U(n))/dx^2);
+    dUdt(n) = alpha*(-(U(n)-U(n-1))/dx^2+(U_L-U(n))/dx^2);
+
     % expl. Euler
     U = U + dUdt *dt;
 
     % plot
     figure(1)
-    imagesc(U)
-    colormap('hot')
-    
-    %plot(x, U, 'LineWidth',3)
-    %axis([0 L 0 100])
-    %xlabel('X position')
-    %ylabel('temperature')
-    
-    pause(0.05)
+    %imagesc(U)
+    %colormap('hot')
+    plot(x, U, 'LineWidth',3)
+    axis([0 L 0 100])
+    xlabel('X position')
+    ylabel('temperature')
+    pause(0.01)
 end
+
+
