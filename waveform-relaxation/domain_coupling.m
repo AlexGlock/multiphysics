@@ -16,60 +16,70 @@ n = 40;          % node count
 
 % timesteps
 t_end = 15;      % [s] duration
-dt = 0.02;       % [s] time step
+dt = 0.01;       % [s] time step
 
 % boundary conditions u(t,0) & u(t,L)
 U_0 = 90;
 U_Lh = 45;       % guess of coupling coeff.
 U_L = 20;
 
+% initial condition u(0,x)
+u0 = 15;
+
 % thermal stuff
 alpha = 0.0001; 
 
 % 1st order ODE: Ydx = alpha * x + Y 
 % -------------------------------------------------------------------------
-x_d0 = linspace(0,L/2,n/2);
-x_d1 = linspace(L/2, L, n/2);
+dx = L/n;
+x_d0 = linspace(0,L/2-dx,n/2-1);
+x_d1 = linspace(L/2+dx, L, n/2-1);
 t = linspace(0,t_end, t_end/dt);
 
-%U = ones(n, 1) *u0;
-U_d0 = ones(n/2, 1)* u0;     % solution vector(s)
+
+U_d0 = ones(n/2-1, 1)* u0;     % solution vector(s)
 U_d1 = U_d0;
-dUdt_d0 = zeros(n/2, 1);     % derivative
+dUdt_d0 = zeros(n/2-1, 1);     % derivative
 dUdt_d1 = dUdt_d0;
+
+% set initial boundary vals 
+U_d0(1) = U_0;
+U_d1(end) = U_L;
 
 % stepping through time
 for j = 1:length(t)
 
     % on D0 domain --------------------------------------------------------
-    for i = 2:n/2-1
+    parfor i = 2:n/2-2
         dUdt_d0(i) = alpha*(-(U_d0(i)-U_d0(i-1))/dx^2+(U_d0(i+1)-U_d0(i))/dx^2);
     end
     % boundary nodes
-    dUdt_d0(1) = alpha*(-(U_d0(1)-U_0)/dx^2+(U_d0(2)-U_d0(1))/dx^2);
-    dUdt_d0(n/2) = alpha*(-(U_d0(n/2)-U_d0(n/2-1))/dx^2+(U_Lh-U_d0(n/2))/dx^2);
+    dUdt_d0(1) = 0;
+    dUdt_d0(n/2-1) = alpha*(-(U_d0(n/2-1)-U_d0(n/2-2))/dx^2+(U_Lh-U_d0(n/2-1))/dx^2);
     % expl. Euler
     U_d0 = U_d0 + dUdt_d0 *dt;
 
     % on D1 domain --------------------------------------------------------
-    for i = 2:n/2-1
+    parfor i = 2:n/2-2
         dUdt_d1(i) = alpha*(-(U_d1(i)-U_d1(i-1))/dx^2+(U_d1(i+1)-U_d1(i))/dx^2);
     end
     % boundary nodes
     dUdt_d1(1) = alpha*(-(U_d1(1)-U_Lh)/dx^2+(U_d1(2)-U_d1(1))/dx^2);
-    dUdt_d1(n/2) = alpha*(-(U_d1(n/2)-U_d1(n/2-1))/dx^2+(U_L-U_d1(n/2))/dx^2);
+    dUdt_d1(n/2-1) = 0;
     % expl. Euler
     U_d1 = U_d1 + dUdt_d1 *dt;
 
     % update coupling ??? -------------------------------------------------
-    U_Lh = 0.5 * (U_d0(end)+U_d1(1));
+    U_Lh = 0.5 * (U_d0(end) + U_d1(1)) ;
     
     % plot
     figure(1)
-    plot(x_d0, U_d0, x_d1, U_d1, 'LineWidth',3)
+    plot(x_d0, U_d0, x_d1, U_d1,'LineWidth',2)
+    hold on
+    plot(L/2, U_Lh, '*')
+    hold off
     axis([0 L 0 100])
     xlabel('X position')
-    xline(x_d1(1), '-', {'interface [s]'})
+    xline(L/2, '-', {'interface L/2'})
     ylabel('temperature')
-    pause(0.01)
 end

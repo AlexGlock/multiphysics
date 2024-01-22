@@ -1,6 +1,6 @@
 %% waveform relaxation algorithm
 
-%   1D heat propagation
+%   1D heat propagation - FDTD
 %
 %   0 ============== L
 %
@@ -41,19 +41,16 @@ for j = 1:length(t)
     % boundary nodes
     dUdt(1) = alpha*(-(U(1)-U_0)/dx^2+(U(2)-U(1))/dx^2);
     dUdt(n) = alpha*(-(U(n)-U(n-1))/dx^2+(U_L-U(n))/dx^2);
-
     % expl. Euler
     U = U + dUdt *dt;
 
     % plot
     figure(1)
-    %imagesc(U)
-    %colormap('hot')
     plot(x, U, 'LineWidth',3)
     axis([0 L 0 100])
     xlabel('X position')
     ylabel('temperature')
-    pause(0.01)
+    %pause(0.01)
 end
 
 
