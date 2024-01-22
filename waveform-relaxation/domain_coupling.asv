@@ -15,30 +15,31 @@ L = 0.1;         % [m] length
 n = 40;          % node count
 
 % timestepping
-t_end = 15;         % [s] duration
-dt = 0.01;          % [s] time step
+t_end = 15;      % [s] duration
+dt = 0.01;       % [s] time step
 
 % boundary conditions
-U_0 = 90;           % [C°] left boundary
-U_Lh = 45;          % [C°] first guess of coupling
-U_L = 20;           % [C°] right boundary
+U_0 = 90;
+U_Lh = 45;       % guess of coupling coeff.
+U_L = 20;
 
-% initial condition
-u0 = 10;            % [C°] temp of domain at t=0
+% initial condition u(0,x)
+u0 = 15;
 
 % thermal stuff
-alpha = 0.0001;     % funky thermal conductivity 
- 
-%% DOMAIN & TIME DISCRETIZATION -------------------------------------------
+alpha = 0.0001; 
+
+% 1st order ODE: Ydx = alpha * x + Y 
+% -------------------------------------------------------------------------
 dx = L/n;
 x_d0 = linspace(0,L/2-dx,n/2-1);
 x_d1 = linspace(L/2+dx, L, n/2-1);
 t = linspace(0,t_end, t_end/dt);
 
-% solution vector(s)
-U_d0 = ones(n/2-1, 1)* u0;
+
+U_d0 = ones(n/2-1, 1)* u0;     % solution vector(s)
 U_d1 = U_d0;
-dUdt_d0 = zeros(n/2-1, 1);
+dUdt_d0 = zeros(n/2-1, 1);     % derivative
 dUdt_d1 = dUdt_d0;
 
 % set initial boundary vals 
@@ -47,6 +48,7 @@ U_d1(end) = U_L;
 
 % stepping through time
 for j = 1:length(t)
+
 %% on D0 domain -----------------------------------------------------------
     parfor i = 2:n/2-2
         dUdt_d0(i) = alpha*(-(U_d0(i)-U_d0(i-1))/dx^2+(U_d0(i+1)-U_d0(i))/dx^2);
